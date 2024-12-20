@@ -1,37 +1,55 @@
-﻿using HotelBookingPlatform.Domain.Interfaces;
+﻿using AutoMapper;
+using HotelBookingPlatform.Domain.Interfaces;
+using HotelBookingPlatform.Infrastructure.Interfaces;
 
 namespace HotelBookingPlatform.Domain.Services
 {
-    public class Service<T> : IService<T> where T : class
+    public class Service<T, TEntity> : IService<T, TEntity> 
+        where T : class 
+        where TEntity : class
     {
-        public Task AddAsync(T item)
+        private readonly IRepository<TEntity> _repository;
+        private readonly IMapper _mapper;
+
+        public Service(IRepository<TEntity> repository, IMapper mapper)
         {
-            throw new NotImplementedException();
+            _repository = repository;
+            _mapper = mapper;
+        }
+
+        public async Task AddAsync(T item)
+        {
+            var entity = _mapper.Map<TEntity>(item);
+            await _repository.AddAsync(entity);
         }
 
         public void Delete(T item)
         {
-            throw new NotImplementedException();
+            var entity = _mapper.Map<TEntity>(item);
+            _repository.Delete(entity);
         }
 
-        public Task<List<T>> GetAllAsync(int pageSize = 6, int pageNumer = 1)
+        public async Task<IEnumerable<T>> GetAllAsync(int pageSize = 6, int pageNumer = 1)
         {
-            throw new NotImplementedException();
+            var entities = await _repository.GetAllAsync(pageSize, pageNumer);
+            return _mapper.Map<IEnumerable<T>>(entities);
         }
 
-        public Task<T?> GetByIdAsync(int id)
+        public async Task<T?> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var entity = await _repository.GetByIdAsync(id);
+            return _mapper.Map<T>(entity);
         }
 
-        public Task SaveAsync()
+        public async Task SaveAsync()
         {
-            throw new NotImplementedException();
+            await _repository.SaveAsync();
         }
 
         public void Update(T item)
         {
-            throw new NotImplementedException();
+            var entity = _mapper.Map<TEntity>(item);
+            _repository.Update(entity);
         }
     }
 }
