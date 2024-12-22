@@ -5,8 +5,8 @@ using HotelBookingPlatform.Infrastructure.Interfaces;
 namespace HotelBookingPlatform.Domain.Services
 {
     public class Service<T, TEntity>(IRepository<TEntity> repository, IMapper mapper) : IService<T, TEntity> 
-        where T : class 
-        where TEntity : class
+        where T : class          // T => domain layer entity (Domain.ItemEntity)
+        where TEntity : class    // TEntity => infrastructure layer entity (Infrastructure.Item)
     {
         public async Task AddAsync(T item)
         {
