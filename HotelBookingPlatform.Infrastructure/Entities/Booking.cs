@@ -11,6 +11,6 @@ namespace HotelBookingPlatform.Infrastructure.Entities
         public decimal TotalPrice { get; set; }
         public string Status {  get; set; } = string.Empty;
         public User? User { get; set; }
-        public List<Room>? Rooms { get; set; }
+        public List<Room> Rooms { get; set; } = [];
     }
 }
