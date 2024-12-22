@@ -1,7 +1,6 @@
 ﻿using HotelBookingPlatform.Infrastructure.Entities;
 using HotelBookingPlatform.Infrastructure.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 
 namespace HotelBookingPlatform.Infrastructure.Repositories
 {
