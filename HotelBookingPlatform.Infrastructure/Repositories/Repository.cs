@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HotelBookingPlatform.Infrastructure.Repositories
 {
-    public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
+    public class Repository<TEntity> : IRepository<TEntity> where TEntity : AuditEntity
     {
         protected readonly AppDbContext _context;
         protected readonly DbSet<TEntity> _dbSet;
@@ -34,6 +34,7 @@ namespace HotelBookingPlatform.Infrastructure.Repositories
 
         public void Update(TEntity item)
         {
+            item.ModificationDate = DateTime.Now;
             _dbSet.Update(item);
         }
 

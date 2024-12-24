@@ -1,6 +1,8 @@
-﻿namespace HotelBookingPlatform.Infrastructure.Entities
+﻿using HotelBookingPlatform.Infrastructure.Interfaces;
+
+namespace HotelBookingPlatform.Infrastructure.Entities
 {
-    public class User
+    public class User : AuditEntity
     {
         public int UserId { get; set; }
         public string Email { get; set; } = string.Empty;

@@ -12,6 +12,7 @@ namespace HotelBookingPlatform.Infrastructure.Entities
         public string Location { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public string Owner { get; set; } = string.Empty;
+        public string LocationOnMap {  get; set; } = string.Empty;
         public City? City { get; set; }
         public List<Room> Rooms { get; set; } = [];
         public List<Review> Reviews { get; set; } = [];

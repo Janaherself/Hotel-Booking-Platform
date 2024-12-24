@@ -1,6 +1,8 @@
-﻿namespace HotelBookingPlatform.Infrastructure.Entities
+﻿using HotelBookingPlatform.Infrastructure.Interfaces;
+
+namespace HotelBookingPlatform.Infrastructure.Entities
 {
-    public class HotelImage
+    public class HotelImage : AuditEntity
     {
         public int HotelImageId { get; set; }
         public int HotelId { get; set; }
