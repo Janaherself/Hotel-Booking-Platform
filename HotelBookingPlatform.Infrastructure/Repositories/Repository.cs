@@ -45,10 +45,11 @@ namespace HotelBookingPlatform.Infrastructure.Repositories
             _logger.LogInformation("Waiting for context to update {Item}..", item);
         }
 
-        public async Task AddAsync(TEntity item)
+        public async Task<TEntity?> AddAsync(TEntity item)
         {
             _logger.LogInformation("Waiting for context to add {Item}..", item);
-            await _dbSet.AddAsync(item);
+            var entity = await _dbSet.AddAsync(item);
+            return entity as TEntity;
         }
 
         public async Task SaveAsync()
