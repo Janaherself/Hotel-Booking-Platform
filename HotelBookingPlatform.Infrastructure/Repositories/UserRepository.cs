@@ -13,13 +13,13 @@ namespace HotelBookingPlatform.Infrastructure.Repositories
             return await base._dbSet.FirstOrDefaultAsync(u => u.Email == email);
         }
 
-        public async Task<User?> RegisterAsync(string email, string hashedPassword)
+        public async Task<User?> RegisterAsync(string email, string hashedPassword, string role)
         {
             var user = new User
             {
                 Email = email,
                 PasswordHash = hashedPassword,
-                Role = email == "admin@admin.com" ? "Admin" : "User"
+                Role = role
             };
 
             try
