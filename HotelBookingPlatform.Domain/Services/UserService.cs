@@ -53,7 +53,7 @@ namespace HotelBookingPlatform.Domain.Services
 
             var role = roleService.AssignRole(loginEntity.Email);
 
-            var user = await userRepository.RegisterAsync(loginEntity.Password, hashedPassword, role);
+            var user = await userRepository.RegisterAsync(loginEntity.Email, hashedPassword, role);
 
             if (user != null)
             {
