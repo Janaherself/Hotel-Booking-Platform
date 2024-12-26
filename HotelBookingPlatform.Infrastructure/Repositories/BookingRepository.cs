@@ -5,11 +5,12 @@ using Microsoft.Extensions.Logging;
 
 namespace HotelBookingPlatform.Infrastructure.Repositories
 {
-    public class BookingRepository(AppDbContext context, ILogger<BookingRepository> logger) : Repository<Booking>(context, logger), IBookinglRepository
+    public class BookingRepository(AppDbContext context, ILogger<BookingRepository> logger) 
+        : Repository<Booking>(context, logger), IBookinglRepository
     {
         public async Task<IEnumerable<Hotel?>> GetRecentlyVisitedHotelsAsync(int userId)
         {
-            logger.LogInformation("Get recently visited hotels for user with Id {Id}.", userId);
+            logger.LogInformation("Getting recently visited hotels for user with Id {Id}..", userId);
             var recentlyVisitedHotels = await _dbSet
             .Where(b => b.UserId == userId)
             .OrderByDescending(b => b.CheckOutDate)
@@ -24,7 +25,7 @@ namespace HotelBookingPlatform.Infrastructure.Repositories
 
         public async Task<IEnumerable<City?>> GetTopVisitedCitiesAsync()
         {
-            logger.LogInformation("Get top visited cities in the platform.");
+            logger.LogInformation("Getting top visited cities in the platform..");
             var topCities = await _dbSet
             .SelectMany(b => b.Rooms)
             .Select(r => r.Hotel)

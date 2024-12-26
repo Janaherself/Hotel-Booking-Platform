@@ -5,11 +5,12 @@ using Microsoft.Extensions.Logging;
 
 namespace HotelBookingPlatform.Infrastructure.Repositories
 {
-    public class UserRepository(AppDbContext context, ILogger<UserRepository> logger) : Repository<User>(context, logger), IUserRepository
+    public class UserRepository(AppDbContext context, ILogger<UserRepository> logger) 
+        : Repository<User>(context, logger), IUserRepository
     {
         public async Task<User?> GetByEmailAsync(string email)
         {
-            logger.LogInformation("Search users by email.");
+            logger.LogInformation("Searching users by email..");
             return await base._dbSet.FirstOrDefaultAsync(u => u.Email == email);
         }
 

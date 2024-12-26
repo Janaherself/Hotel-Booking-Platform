@@ -19,7 +19,7 @@ namespace HotelBookingPlatform.Infrastructure.Repositories
 
         public async Task<TEntity?> GetByIdAsync(int id)
         {
-            _logger.LogInformation("Getting {Item} with id {Id}..", id, typeof(TEntity));
+            _logger.LogInformation("Getting {Item} with id {Id}..", typeof(TEntity), id);
             return await _dbSet.FindAsync(id);
         }
 
@@ -57,7 +57,7 @@ namespace HotelBookingPlatform.Infrastructure.Repositories
             try
             {
                 await _context.SaveChangesAsync();
-                _logger.LogInformation("Changes to database succeeded.");
+                _logger.LogInformation("Changes to database was successfuly saved.");
             }
             catch (DbUpdateConcurrencyException ex)
             {
