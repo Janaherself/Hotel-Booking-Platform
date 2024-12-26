@@ -6,6 +6,6 @@ namespace HotelBookingPlatform.Infrastructure.Interfaces
     {
         Task<User?> GetByEmailAsync(string email);
 
-        Task<User?> RegisterAsync(string email, string hashedPassword);
+        Task<User?> RegisterAsync(string email, string hashedPassword, string role);
     }
 }
