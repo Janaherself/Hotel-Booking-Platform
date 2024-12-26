@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+﻿using HotelBookingPlatform.Domain.Interfaces;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using System.Security.Cryptography;
 
 namespace HotelBookingPlatform.Domain.Services
 {
-    public static class PasswordService
+    public class PasswordService : IPasswordService
     {
-        public static bool VerifyPassword(string enteredPassword, string storedPasswordHash)
+        public bool VerifyPassword(string enteredPassword, string storedPasswordHash)
         {
             var parts = storedPasswordHash.Split(':');
             if (parts.Length != 2)
@@ -24,7 +25,7 @@ namespace HotelBookingPlatform.Domain.Services
             return CryptographicOperations.FixedTimeEquals(storedHash, enteredHash);
         }
 
-        public static string HashPassword(string password)
+        public string HashPassword(string password)
         {
             byte[] salt = RandomNumberGenerator.GetBytes(64);
 
