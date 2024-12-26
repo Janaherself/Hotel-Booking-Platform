@@ -3,43 +3,47 @@ using HotelBookingPlatform.Domain.DomainEntities;
 using HotelBookingPlatform.Domain.Interfaces;
 using HotelBookingPlatform.Infrastructure.Entities;
 using HotelBookingPlatform.Infrastructure.Interfaces;
-using static HotelBookingPlatform.Domain.Services.PasswordService;
 
 namespace HotelBookingPlatform.Domain.Services
 {
-    public class UserService(IUserRepository userRepository, IMapper mapper) : Service<UserEntity, User>(userRepository, mapper), IUserService
+    public class UserService(IUserRepository userRepository, IMapper mapper, IPasswordService passwordService, ITokenService tokenService) 
+        : Service<UserEntity, User>(userRepository, mapper), IUserService
     {
-        public async Task<bool> LoginAsync(string email, string password)
+        public async Task<string?> LoginAsync(string email, string password, string role)
         {
             var user = await userRepository.GetByEmailAsync(email);
             if (user == null)
             {
                 //logger.LogInformation("User with email {@email} is not found.", email);
-                return false;
+                return null;
             }
-            if (!VerifyPassword(password, user.PasswordHash))
+            if (!passwordService.VerifyPassword(password, user.PasswordHash))
             {
                 //logger.LogInformation("Invalid Password for user with email {@email}", email);
-                return false;
+                return null;
             }
-            // generate JWT
-            return true;
+
+            var token = tokenService.GenerateToken(email, role);
+
+            return token;
         }
 
-        public async Task<bool> RegisterAsync(string email, string password)
+        public async Task<string?> RegisterAsync(string email, string password, string role)
         {
             if (await userRepository.GetByEmailAsync(email) != null)
             {
                 //logger.LogInformation("User with email {@email} already exists.", email);
-                return false;
+                return null;
             }
 
-            var hashedPassword = HashPassword(password);
-            await userRepository.RegisterAsync(email, hashedPassword);
+            var hashedPassword = passwordService.HashPassword(password);
+            if (await userRepository.RegisterAsync(email, hashedPassword))
+            {
+                var token = tokenService.GenerateToken(email, role);
+                return token;
+            }
 
-            // generate JWT
-
-            return true;
+            return null;
         }
     }
 }
