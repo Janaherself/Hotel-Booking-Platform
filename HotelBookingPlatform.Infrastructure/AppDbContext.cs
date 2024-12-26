@@ -211,23 +211,23 @@ namespace HotelBookingPlatform.Infrastructure
             );
 
             modelBuilder.Entity<User>().HasData(
-                new User { UserId = 1, Email = "user1@example.com", PasswordHash = "hashedpassword1" },
-                new User { UserId = 2, Email = "user2@example.com", PasswordHash = "hashedpassword2" },
-                new User { UserId = 3, Email = "user3@example.com", PasswordHash = "hashedpassword3" },
-                new User { UserId = 4, Email = "user4@example.com", PasswordHash = "hashedpassword4" },
-                new User { UserId = 5, Email = "user5@example.com", PasswordHash = "hashedpassword5" },
-                new User { UserId = 6, Email = "user6@example.com", PasswordHash = "hashedpassword6" },
-                new User { UserId = 7, Email = "user7@example.com", PasswordHash = "hashedpassword7" },
-                new User { UserId = 8, Email = "user8@example.com", PasswordHash = "hashedpassword8" },
-                new User { UserId = 9, Email = "user9@example.com", PasswordHash = "hashedpassword9" },
-                new User { UserId = 10, Email = "user10@example.com", PasswordHash = "hashedpassword10" },
-                new User { UserId = 11, Email = "user11@example.com", PasswordHash = "hashedpassword11" },
-                new User { UserId = 12, Email = "user12@example.com", PasswordHash = "hashedpassword12" },
-                new User { UserId = 13, Email = "user13@example.com", PasswordHash = "hashedpassword13" },
-                new User { UserId = 14, Email = "user14@example.com", PasswordHash = "hashedpassword14" },
-                new User { UserId = 15, Email = "user15@example.com", PasswordHash = "hashedpassword15" },
-                new User { UserId = 16, Email = "user16@example.com", PasswordHash = "hashedpassword16" },
-                new User { UserId = 17, Email = "user17@example.com", PasswordHash = "hashedpassword17" }
+                new User { UserId = 1, Email = "user1@example.com", PasswordHash = "hashedpassword1", Role = "User" },
+                new User { UserId = 2, Email = "user2@example.com", PasswordHash = "hashedpassword2", Role = "User" },
+                new User { UserId = 3, Email = "user3@example.com", PasswordHash = "hashedpassword3", Role = "User" },
+                new User { UserId = 4, Email = "user4@example.com", PasswordHash = "hashedpassword4", Role = "User" },
+                new User { UserId = 5, Email = "user5@example.com", PasswordHash = "hashedpassword5", Role = "User" },
+                new User { UserId = 6, Email = "user6@example.com", PasswordHash = "hashedpassword6", Role = "User" },
+                new User { UserId = 7, Email = "user7@example.com", PasswordHash = "hashedpassword7", Role = "User" },
+                new User { UserId = 8, Email = "user8@example.com", PasswordHash = "hashedpassword8", Role = "User" },
+                new User { UserId = 9, Email = "user9@example.com", PasswordHash = "hashedpassword9", Role = "User" },
+                new User { UserId = 10, Email = "user10@example.com", PasswordHash = "hashedpassword10", Role = "User" },
+                new User { UserId = 11, Email = "user11@example.com", PasswordHash = "hashedpassword11", Role = "User" },
+                new User { UserId = 12, Email = "user12@example.com", PasswordHash = "hashedpassword12", Role = "User" },
+                new User { UserId = 13, Email = "user13@example.com", PasswordHash = "hashedpassword13", Role = "User" },
+                new User { UserId = 14, Email = "user14@example.com", PasswordHash = "hashedpassword14", Role = "User" },
+                new User { UserId = 15, Email = "user15@example.com", PasswordHash = "hashedpassword15", Role = "User" },
+                new User { UserId = 16, Email = "user16@example.com", PasswordHash = "hashedpassword16", Role = "User" },
+                new User { UserId = 17, Email = "user17@example.com", PasswordHash = "hashedpassword17", Role = "User" }
             );
 
             modelBuilder.Entity<Review>().HasData(
