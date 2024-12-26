@@ -6,7 +6,12 @@ using HotelBookingPlatform.Infrastructure.Interfaces;
 
 namespace HotelBookingPlatform.Domain.Services
 {
-    public class UserService(IUserRepository userRepository, IMapper mapper, IPasswordService passwordService, ITokenService tokenService) 
+    public class UserService(
+        IUserRepository userRepository,
+        IMapper mapper,
+        IPasswordService passwordService,
+        ITokenService tokenService, 
+        IRoleService roleService) 
         : Service<UserEntity, User>(userRepository, mapper), IUserService
     {
         public async Task<string?> LoginAsync(LoginEntity loginEntity)
@@ -37,7 +42,10 @@ namespace HotelBookingPlatform.Domain.Services
             }
 
             var hashedPassword = passwordService.HashPassword(loginEntity.Password);
-            var user = await userRepository.RegisterAsync(loginEntity.Password, hashedPassword);
+
+            var role = roleService.AssignRole(loginEntity.Email);
+
+            var user = await userRepository.RegisterAsync(loginEntity.Password, hashedPassword, role);
 
             if (user != null)
             {
