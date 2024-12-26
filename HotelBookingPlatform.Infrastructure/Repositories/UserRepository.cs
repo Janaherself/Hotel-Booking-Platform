@@ -14,7 +14,7 @@ namespace HotelBookingPlatform.Infrastructure.Repositories
             return await base._dbSet.FirstOrDefaultAsync(u => u.Email == email);
         }
 
-        public async Task<User?> RegisterAsync(string email, string hashedPassword, string role)
+        public async Task<bool> RegisterAsync(string email, string hashedPassword, string role)
         {
             var user = new User
             {
@@ -25,10 +25,10 @@ namespace HotelBookingPlatform.Infrastructure.Repositories
 
             try
             {
-                var dbUser = await base.AddAsync(user);
+                await base.AddAsync(user);
                 await base.SaveAsync();
                 logger.LogInformation("User with email {Email} has successfully registered.", email);
-                return dbUser;
+                return true;
             }
             catch (DbUpdateException ex)
             {
@@ -36,7 +36,7 @@ namespace HotelBookingPlatform.Infrastructure.Repositories
 
             }
 
-            return null;
+            return false;
         }
     }
 }

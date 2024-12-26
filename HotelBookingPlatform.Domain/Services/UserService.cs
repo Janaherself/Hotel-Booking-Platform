@@ -55,14 +55,14 @@ namespace HotelBookingPlatform.Domain.Services
 
             var user = await userRepository.RegisterAsync(loginEntity.Email, hashedPassword, role);
 
-            if (user != null)
+            if (user)
             {
                 logger.LogInformation("A new user with email {Email} has been successfully registered.", loginEntity.Email);
-                var token = tokenService.GenerateToken(user.Email, user.Role);
+                var token = tokenService.GenerateToken(loginEntity.Email, role);
                 return token;
             }
 
-            logger.LogError("The register method on user repository encountered an error while trying to register user with email {Email}."
+            logger.LogError("An error occured while trying to create a token for user with email {Email}."
                 , loginEntity.Email);
 
             return null;
