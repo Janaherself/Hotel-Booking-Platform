@@ -5,9 +5,8 @@ namespace HotelBookingPlatform.Domain.Interfaces
 {
     public interface IUserService : IService<UserEntity, User>
     {
-        Task<bool> LoginAsync(string email, string password);
+        Task<string?> LoginAsync(LoginEntity loginEntity);
 
-        Task<bool> RegisterAsync(string email, string password);
-
+        Task<string?> RegisterAsync(LoginEntity loginEntity);
     }
 }
