@@ -1,5 +1,5 @@
-﻿using HotelBookingPlatform.Domain.DomainEntities;
-using HotelBookingPlatform.Domain.Interfaces;
+﻿using HotelBookingPlatform.Domain.Interfaces;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
@@ -7,10 +7,12 @@ using System.Text;
 
 namespace HotelBookingPlatform.Domain.Services
 {
-    public class TokenService : ITokenService
+    public class TokenService(ILogger<TokenService> logger) : ITokenService
     {
         public string GenerateToken(string email, string role)
         {
+            logger.LogInformation("Generating a token for user with email {Email} is in progress..", email);
+
             var secretKey = Environment.GetEnvironmentVariable("InnfinitySecretKey");
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey!));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
@@ -30,6 +32,8 @@ namespace HotelBookingPlatform.Domain.Services
             var handler = new JsonWebTokenHandler();
 
             var token = handler.CreateToken(tokenDescriptor);
+
+            logger.LogInformation("A token was successfully created for user with email {Email}", email);
 
             return token;
         }
