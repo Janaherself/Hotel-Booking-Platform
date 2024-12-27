@@ -6,9 +6,9 @@
     {
         Task<T?> GetByIdAsync(int id);
         Task<IEnumerable<T>> GetAllAsync(int pageSize = 6, int pageNumer = 1);
-        void Delete(T item);
-        void Update(T item);
-        Task AddAsync(T item);
+        Task<bool> Delete(int id);
+        Task<bool> Update(int id, T item);
+        void Add(T item);
         Task SaveAsync();
     }
 }

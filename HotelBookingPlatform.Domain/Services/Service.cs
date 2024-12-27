@@ -13,18 +13,25 @@ namespace HotelBookingPlatform.Domain.Services
         where T : class          // T => domain layer entity (Domain.ItemEntity)
         where TEntity : AuditEntity    // TEntity => infrastructure layer entity (Infrastructure.Item)
     {
-        public async Task AddAsync(T item)
+        public void Add(T item)
         {
             logger.LogInformation("Calling Add method on the {Repository} repository..", typeof(TEntity));
             var entity = mapper.Map<TEntity>(item);
-            await repository.AddAsync(entity);
+            repository.Add(entity);
         }
 
-        public void Delete(T item)
+        public async Task<bool> Delete(int id)
         {
+            var item = await repository.GetByIdAsync(id);
+            if (item == null)
+            {
+                logger.LogInformation("No record of type {Type} in the database corresponds to the Id of {Id}.", typeof(TEntity), id);
+                return false;
+            }
+
             logger.LogInformation("Calling Delete method on the {Repository} repository..", typeof(TEntity));
-            var entity = mapper.Map<TEntity>(item);
-            repository.Delete(entity);
+            repository.Delete(item);
+            return true;
         }
 
         public async Task<IEnumerable<T>> GetAllAsync(int pageSize = 6, int pageNumer = 1)
@@ -47,11 +54,19 @@ namespace HotelBookingPlatform.Domain.Services
             await repository.SaveAsync();
         }
 
-        public void Update(T item)
+        public async Task<bool> Update(int id, T item)
         {
+            var entity = await repository.GetByIdAsync(id);
+            if (entity == null)
+            {
+                logger.LogInformation("No record of type {Type} in the database corresponds to the Id of {Id}.", typeof(TEntity), id);
+                return false;
+            }
+
             logger.LogInformation("Calling Update method on the {Repository} repository..", typeof(TEntity));
-            var entity = mapper.Map<TEntity>(item);
+            mapper.Map(item, entity);
             repository.Update(entity);
+            return true;
         }
     }
 }
