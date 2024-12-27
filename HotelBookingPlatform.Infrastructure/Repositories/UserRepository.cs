@@ -25,7 +25,7 @@ namespace HotelBookingPlatform.Infrastructure.Repositories
 
             try
             {
-                await base.AddAsync(user);
+                base.Add(user);
                 await base.SaveAsync();
                 logger.LogInformation("User with email {Email} has successfully registered.", email);
                 return true;
