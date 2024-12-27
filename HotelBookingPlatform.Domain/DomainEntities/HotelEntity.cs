@@ -2,6 +2,7 @@
 {
     public class HotelEntity
     {
+        public int HotelId { get; set; }
         public string Name { get; set; } = string.Empty;
         public float Rating { get; set; }
         public string Amenities { get; set; } = string.Empty;

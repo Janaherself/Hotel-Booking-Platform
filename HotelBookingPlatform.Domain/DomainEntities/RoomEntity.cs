@@ -2,6 +2,7 @@
 {
     public class RoomEntity
     {
+        public int RoomId { get; set; }
         public int HotelId { get; set; }
         public string Number { get; set; } = string.Empty;
         public decimal Price { get; set; }
