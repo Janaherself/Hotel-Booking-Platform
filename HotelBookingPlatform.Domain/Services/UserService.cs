@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using HotelBookingPlatform.Domain.DomainEntities;
+using HotelBookingPlatform.Domain.Exceptions;
 using HotelBookingPlatform.Domain.Interfaces;
 using HotelBookingPlatform.Infrastructure.Entities;
 using HotelBookingPlatform.Infrastructure.Interfaces;
@@ -16,16 +17,26 @@ namespace HotelBookingPlatform.Domain.Services
         ILogger<UserService> logger) 
         : Service<UserEntity, User>(userRepository, mapper, logger), IUserService
     {
-        public async Task<string?> LoginAsync(LoginEntity loginEntity)
+        public async Task<UserEntity> GetByEmailAsync(string email)
         {
-            logger.LogInformation("Searching for user with email {Email} in database through user repository..", loginEntity.Email);
-
-            var user = await userRepository.GetByEmailAsync(loginEntity.Email);
+            logger.LogInformation("Searching for user with email {Email} in database through user repository..", email);
+            var user = await userRepository.GetByEmailAsync(email);
             if (user == null)
             {
-                logger.LogInformation("User with email {Email} is not found.", loginEntity.Email);
-                return null;
+                logger.LogInformation("User with email {Email} is not found.", email);
+                throw new ItemNotFoundException($"User with email {email} was not found.");
             }
+
+            logger.LogInformation("User with email {Email} is found.", email);
+            var foundUser = mapper.Map<UserEntity>(user);
+            return foundUser;
+        }
+
+        public async Task<string?> LoginAsync(LoginEntity loginEntity)
+        {
+
+            var user = await GetByEmailAsync(loginEntity.Email);
+
             if (!passwordService.VerifyPassword(loginEntity.Password, user.PasswordHash))
             {
                 logger.LogInformation("Invalid Password for user with email {Email}.", loginEntity.Email);
@@ -43,7 +54,7 @@ namespace HotelBookingPlatform.Domain.Services
         {
             logger.LogInformation("Registering a new user with email {@email}..", loginEntity.Email);
 
-            if (await userRepository.GetByEmailAsync(loginEntity.Email) != null)
+            if (await GetByEmailAsync(loginEntity.Email) != null)
             {
                 logger.LogError("User with email {Email} already exists.", loginEntity.Email);
                 return null;
@@ -62,8 +73,7 @@ namespace HotelBookingPlatform.Domain.Services
                 return token;
             }
 
-            logger.LogError("An error occured while trying to create a token for user with email {Email}."
-                , loginEntity.Email);
+            logger.LogError("An error occured while trying to create a token for user with email {Email}.", loginEntity.Email);
 
             return null;
         }
