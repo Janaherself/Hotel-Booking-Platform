@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using HotelBookingPlatform.Domain.Exceptions;
+using System.Text.Json;
 
 namespace HotelBookingPlatform.API.Middlewares
 {
@@ -15,18 +16,33 @@ namespace HotelBookingPlatform.API.Middlewares
                 logger.LogError(e, "{Message}", e.Message);
 
                 context.Response.ContentType = "application/json";
-                context.Response.StatusCode = StatusCodes.Status500InternalServerError;
 
-                var errorResponse = new
+                if (e is ItemNotFoundException)
                 {
-                    Status = context.Response.StatusCode,
-                    Message = "An internal server error occurred.",
-                    Details = e.Message
-                };
+                    context.Response.StatusCode = StatusCodes.Status404NotFound;
 
-                var jsonErrorResponse = JsonSerializer.Serialize(errorResponse);
+                    var notFoundResponse = new
+                    {
+                        Status = context.Response.StatusCode,
+                        e.Message
+                    };
 
-                await context.Response.WriteAsync(jsonErrorResponse);
+                    await context.Response.WriteAsync(JsonSerializer.Serialize(notFoundResponse));
+                }
+
+                else
+                {
+                    context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+
+                    var errorResponse = new
+                    {
+                        Status = context.Response.StatusCode,
+                        Message = "An internal server error occurred.",
+                        Details = e.Message
+                    };
+
+                    await context.Response.WriteAsync(JsonSerializer.Serialize(errorResponse));
+                }
             }
         }
     }
