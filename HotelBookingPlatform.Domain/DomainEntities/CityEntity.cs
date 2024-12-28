@@ -1,6 +1,4 @@
-﻿using HotelBookingPlatform.Infrastructure.Entities;
-
-namespace HotelBookingPlatform.Domain.DomainEntities
+﻿namespace HotelBookingPlatform.Domain.DomainEntities
 {
     public class CityEntity
     {
