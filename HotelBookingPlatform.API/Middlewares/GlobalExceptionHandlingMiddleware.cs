@@ -12,7 +12,7 @@ namespace HotelBookingPlatform.API.Middlewares
             }
             catch (Exception e)
             {
-                logger.LogError(e, e.Message);
+                logger.LogError(e, "{Message}", e.Message);
 
                 context.Response.ContentType = "application/json";
                 context.Response.StatusCode = StatusCodes.Status500InternalServerError;
