@@ -15,6 +15,7 @@ namespace HotelBookingPlatform.Domain.Mapping
             CreateMap<ReviewEntity, Review>().ReverseMap();
             CreateMap<RoomEntity, Room>().ReverseMap();
             CreateMap<UserEntity, User>().ReverseMap();
+            CreateMap<HotelImageEntity, HotelImage>().ReverseMap();
         }
     }
 }
