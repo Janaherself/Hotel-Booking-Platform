@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using HotelBookingPlatform.Domain.Exceptions;
 using HotelBookingPlatform.Domain.Interfaces;
 using HotelBookingPlatform.Infrastructure.Interfaces;
 using Microsoft.Extensions.Logging;
@@ -44,7 +45,7 @@ namespace HotelBookingPlatform.Domain.Services
         public async Task<T?> GetByIdAsync(int id)
         {
             logger.LogInformation("Calling GetById method on the {Repository} repository..", typeof(TEntity));
-            var entity = await repository.GetByIdAsync(id);
+            var entity = await repository.GetByIdAsync(id) ?? throw new ItemNotFoundException($"Item {typeof(TEntity)} with id {id} was not found.");
             return mapper.Map<T>(entity);
         }
 
