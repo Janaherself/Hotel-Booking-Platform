@@ -1,3 +1,4 @@
+using HotelBookingPlatform.API.Middlewares;
 using HotelBookingPlatform.Domain.Interfaces;
 using HotelBookingPlatform.Domain.Services;
 using HotelBookingPlatform.Infrastructure;
@@ -20,6 +21,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("defaultDB"))
     .EnableSensitiveDataLogging();
 });
+
+builder.Services.AddTransient<GlobalExceptionHandlingMiddleware>();
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -54,6 +57,11 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+builder.Services.AddAuthorizationBuilder()
+    .AddPolicy("Admin", policy => policy.RequireClaim("Role", "Admin"))
+    .AddPolicy("User", policy => policy.RequireClaim("Role", "User"))
+    .AddPolicy("AdminOrUser", policy => policy.RequireClaim("Role", "Admin", "User"));
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(
@@ -64,9 +72,6 @@ builder.Services.AddSwaggerGen(
             Title = "Restaurant Reservation API",
             Version = "v1",
         });
-        var xmlFile = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
-        var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-        options.IncludeXmlComments(xmlPath);
         options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
         {
             Name = "Authorization",
@@ -97,6 +102,8 @@ builder.Services.AddSwaggerGen(
 var app = builder.Build();
 
 app.UseSerilogRequestLogging();
+
+app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
 
 if (app.Environment.IsDevelopment())
 {
