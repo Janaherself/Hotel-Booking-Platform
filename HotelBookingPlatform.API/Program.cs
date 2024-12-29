@@ -75,9 +75,12 @@ builder.Services.AddSwaggerGen(
     {
         options.SwaggerDoc("v1", new OpenApiInfo
         {
-            Title = "Restaurant Reservation API",
+            Title = "Hotel Booking API",
             Version = "v1",
         });
+        var xmlFile = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
+        var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+        options.IncludeXmlComments(xmlPath);
         options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
         {
             Name = "Authorization",
