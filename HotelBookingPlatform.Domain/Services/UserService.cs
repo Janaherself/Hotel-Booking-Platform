@@ -54,7 +54,7 @@ namespace HotelBookingPlatform.Domain.Services
         {
             logger.LogInformation("Registering a new user with email {@email}..", loginEntity.Email);
 
-            if (await GetByEmailAsync(loginEntity.Email) != null)
+            if (await userRepository.GetByEmailAsync(loginEntity.Email) != null)
             {
                 logger.LogError("User with email {Email} already exists.", loginEntity.Email);
                 return null;
