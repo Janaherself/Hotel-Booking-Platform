@@ -15,7 +15,7 @@ namespace HotelBookingPlatform.API.Controllers
     /// <param name="logger"></param>
     [Route("api/users")]
     [ApiController]
-    public class UserController(IUserService userService, IMapper mapper, ILogger logger) : ControllerBase
+    public class UserController(IUserService userService, IMapper mapper, ILogger<UserController> logger) : ControllerBase
     {
         /// <summary>
         /// Gets a list of all users in the database

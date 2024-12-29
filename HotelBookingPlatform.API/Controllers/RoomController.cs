@@ -16,7 +16,7 @@ namespace HotelBookingPlatform.API.Controllers
     /// <param name="logger"></param>
     [Route("api/rooms")]
     [ApiController]
-    public class RoomController(IService<RoomEntity, Room> roomService, IMapper mapper, ILogger logger) : ControllerBase
+    public class RoomController(IService<RoomEntity, Room> roomService, IMapper mapper, ILogger<RoomController> logger) : ControllerBase
     {
         /// <summary>
         /// Gets a list of all rooms in the database

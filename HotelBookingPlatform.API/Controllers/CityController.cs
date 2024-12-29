@@ -16,7 +16,7 @@ namespace HotelBookingPlatform.API.Controllers
     /// <param name="logger"></param>
     [Route("api/cities")]
     [ApiController]
-    public class CityController(IService<CityEntity, City> cityService, IMapper mapper, ILogger logger) : ControllerBase
+    public class CityController(IService<CityEntity, City> cityService, IMapper mapper, ILogger<CityController> logger) : ControllerBase
     {
         /// <summary>
         /// Gets a list of all cities in the database

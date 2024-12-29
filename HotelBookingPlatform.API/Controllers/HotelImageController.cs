@@ -16,7 +16,8 @@ namespace HotelBookingPlatform.API.Controllers
     /// <param name="logger"></param>
     [Route("api/hotel-images")]
     [ApiController]
-    public class HotelImageController(IService<HotelImageEntity, HotelImage> hotelImageService, IMapper mapper, ILogger logger) : ControllerBase
+    public class HotelImageController(IService<HotelImageEntity, HotelImage> hotelImageService, IMapper mapper, ILogger<HotelImageController> logger)
+        : ControllerBase
     {
         /// <summary>
         /// Gets a list of all hotels' images in the database

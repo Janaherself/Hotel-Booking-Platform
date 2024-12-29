@@ -16,7 +16,11 @@ namespace HotelBookingPlatform.API.Controllers
     /// <param name="logger"></param>
     [Route("api/featured-deals")]
     [ApiController]
-    public class FeaturedDeals(IService<FeaturedDealEntity, FeaturedDeal> featuredDealsService, IMapper mapper, ILogger logger) : ControllerBase
+    public class FeaturedDealController(
+        IService<FeaturedDealEntity, FeaturedDeal> featuredDealsService, 
+        IMapper mapper, 
+        ILogger<FeaturedDealController> logger)
+        : ControllerBase
     {
         /// <summary>
         /// Gets a list of all deals in the database

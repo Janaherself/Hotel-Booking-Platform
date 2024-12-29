@@ -14,7 +14,7 @@ namespace HotelBookingPlatform.API.Controllers
     /// <param name="logger"></param>
     [Route("api/authentication")]
     [ApiController]
-    public class AuthenticationController(IUserService userService, IMapper mapper, ILogger logger) : ControllerBase
+    public class AuthenticationController(IUserService userService, IMapper mapper, ILogger<AuthenticationController> logger) : ControllerBase
     {
         /// <summary>
         /// Signs in an existing user to the API

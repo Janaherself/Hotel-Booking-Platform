@@ -16,7 +16,7 @@ namespace HotelBookingPlatform.API.Controllers
     /// <param name="logger"></param>
     [Route("api/reviews")]
     [ApiController]
-    public class ReviewController(IService<ReviewEntity, Review> reviewService, IMapper mapper, ILogger logger) : ControllerBase
+    public class ReviewController(IService<ReviewEntity, Review> reviewService, IMapper mapper, ILogger<ReviewController> logger) : ControllerBase
     {
         /// <summary>
         /// Gets a list of all reviews in the database
