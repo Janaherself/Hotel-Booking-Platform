@@ -14,7 +14,7 @@ namespace HotelBookingPlatform.Domain.Services
         where T : class          // T => domain layer entity (Domain.ItemEntity)
         where TEntity : AuditEntity    // TEntity => infrastructure layer entity (Infrastructure.Item)
     {
-        public void Add(T item)
+        public virtual void Add(T item)
         {
             logger.LogInformation("Calling Add method on the {Repository} repository..", typeof(TEntity));
             var entity = mapper.Map<TEntity>(item);
@@ -55,7 +55,7 @@ namespace HotelBookingPlatform.Domain.Services
             await repository.SaveAsync();
         }
 
-        public async Task<bool> UpdateAsync(int id, T item)
+        public virtual async Task<bool> UpdateAsync(int id, T item)
         {
             var entity = await repository.GetByIdAsync(id);
             if (entity == null)

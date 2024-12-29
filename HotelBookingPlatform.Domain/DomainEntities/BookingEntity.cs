@@ -10,5 +10,7 @@
         public string Status { get; set; } = string.Empty;
         public UserEntity? User { get; set; }
         public List<RoomEntity> Rooms { get; set; } = [];
+        public List<int> RoomIds { get; set; } = [];
+
     }
 }
