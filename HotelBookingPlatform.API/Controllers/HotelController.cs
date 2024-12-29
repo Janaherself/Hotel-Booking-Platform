@@ -141,5 +141,80 @@ namespace HotelBookingPlatform.API.Controllers
 
             return Ok($"Hotel with id {id} has been deleted successfully!");
         }
+
+        /// <summary>
+        /// Searches hotels by amenities
+        /// </summary>
+        /// <param name="amenities"></param>
+        /// <returns></returns>
+        [Authorize(Policy = "AdminOrUser")]
+        [HttpDelete("amenities")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<IActionResult> SearchByAmenitiesAsync(string amenities)
+        {
+            var hotelEntities = await hotelService.SearchByAmenitiesAsync(amenities);
+            if (!hotelEntities.Any())
+            {
+                logger.LogError("No hotels have amenities that match {Amenities}.", amenities);
+                return NotFound("No hotels match your search.");
+            }
+
+            var hotelDtos = mapper.Map<HotelReadDto>(hotelEntities);
+
+            logger.LogInformation("Returning the results back to user..");
+            return Ok(hotelDtos);
+        }
+
+        /// <summary>
+        /// Searches hotels by cities
+        /// </summary>
+        /// <param name="city"></param>
+        /// <returns></returns>
+        [Authorize(Policy = "AdminOrUser")]
+        [HttpDelete("cities")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<IActionResult> SearchByCityAsync(string city)
+        {
+            var hotelEntities = await hotelService.SearchByCityAsync(city);
+            if (!hotelEntities.Any())
+            {
+                logger.LogError("No hotels exist in {City}.", city);
+                return NotFound("No hotels match your search.");
+            }
+
+            var hotelDtos = mapper.Map<HotelReadDto>(hotelEntities);
+
+            logger.LogInformation("Returning the results back to user..");
+            return Ok(hotelDtos);
+        }
+
+        /// <summary>
+        /// Searches hotels by ratings
+        /// </summary>
+        /// <param name="rating"></param>
+        /// <returns></returns>
+        [Authorize(Policy = "AdminOrUser")]
+        [HttpDelete("ratings")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<IActionResult> SearchByAmenitiesAsync(float rating)
+        {
+            var hotelEntities = await hotelService.SearchByRatingAsync(rating);
+            if (!hotelEntities.Any())
+            {
+                logger.LogError("No hotels have ratings that are greater than or equal to {Rating}.", rating);
+                return NotFound("No hotels match your search.");
+            }
+
+            var hotelDtos = mapper.Map<HotelReadDto>(hotelEntities);
+
+            logger.LogInformation("Returning the results back to user..");
+            return Ok(hotelDtos);
+        }
     }
 }
