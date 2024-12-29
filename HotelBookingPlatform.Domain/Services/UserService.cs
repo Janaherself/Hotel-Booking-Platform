@@ -45,7 +45,7 @@ namespace HotelBookingPlatform.Domain.Services
 
             logger.LogInformation("User with email {Email} is authenticated.", loginEntity.Email);
 
-            var token = tokenService.GenerateToken(user.Email, user.Role);
+            var token = tokenService.GenerateToken(user.UserId, user.Email, user.Role);
 
             return token;
         }
@@ -64,12 +64,14 @@ namespace HotelBookingPlatform.Domain.Services
 
             var role = roleService.AssignRole(loginEntity.Email);
 
-            var user = await userRepository.RegisterAsync(loginEntity.Email, hashedPassword, role);
+            var isRegistered = await userRepository.RegisterAsync(loginEntity.Email, hashedPassword, role);
 
-            if (user)
+            if (isRegistered)
             {
                 logger.LogInformation("A new user with email {Email} has been successfully registered.", loginEntity.Email);
-                var token = tokenService.GenerateToken(loginEntity.Email, role);
+                
+                var user = await GetByEmailAsync(loginEntity.Email);
+                var token = tokenService.GenerateToken(user.UserId, loginEntity.Email, role);
                 return token;
             }
 
