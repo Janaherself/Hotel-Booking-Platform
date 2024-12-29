@@ -40,7 +40,7 @@ namespace HotelBookingPlatform.API.Mappings
 
             CreateMap<HotelImageEntity, HotelImageReadDto>();
 
-            CreateMap<LoginEntity, LoginDto>();
+            CreateMap<LoginEntity, LoginDto>().ReverseMap();
 
             CreateMap<ReviewEntity, ReviewReadDto>();
 
