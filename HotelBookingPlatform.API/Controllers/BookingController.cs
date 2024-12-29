@@ -2,7 +2,6 @@
 using HotelBookingPlatform.API.DTOs;
 using HotelBookingPlatform.Domain.DomainEntities;
 using HotelBookingPlatform.Domain.Interfaces;
-using HotelBookingPlatform.Infrastructure.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
