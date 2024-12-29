@@ -2,6 +2,7 @@
 using HotelBookingPlatform.API.DTOs;
 using HotelBookingPlatform.Domain.DomainEntities;
 using HotelBookingPlatform.Domain.Interfaces;
+using HotelBookingPlatform.Domain.Services;
 using HotelBookingPlatform.Infrastructure.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -140,6 +141,106 @@ namespace HotelBookingPlatform.API.Controllers
             logger.LogInformation("Room with id {Id} was deleted succefully.", id);
 
             return Ok($"Room with id {id} has been deleted successfully!");
+        }
+
+        /// <summary>
+        /// Searches rooms by price
+        /// </summary>
+        /// <param name="price"></param>
+        /// <returns></returns>
+        [Authorize(Policy = "AdminOrUser")]
+        [HttpGet("prices")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<IActionResult> SearchByPriceAsync(decimal price)
+        {
+            var roomEntities = await roomService.SearchByPriceAsync(price);
+            if (!roomEntities.Any())
+            {
+                logger.LogError("No rooms have prices that are less than or equal to {Price}.", price);
+                return NotFound("No rooms match your search.");
+            }
+
+            var roomDtos = mapper.Map<RoomReadDto>(roomEntities);
+
+            logger.LogInformation("Returning the results back to user..");
+            return Ok(roomDtos);
+        }
+
+        /// <summary>
+        /// Searches rooms by type
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        [Authorize(Policy = "AdminOrUser")]
+        [HttpGet("types")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<IActionResult> SearchByTypeAsync(string type)
+        {
+            var roomEntities = await roomService.SearchByTypeAsync(type);
+            if (!roomEntities.Any())
+            {
+                logger.LogError("No rooms have types that match {Type}.", type);
+                return NotFound("No rooms match your search.");
+            }
+
+            var roomDtos = mapper.Map<RoomReadDto>(roomEntities);
+
+            logger.LogInformation("Returning the results back to user..");
+            return Ok(roomDtos);
+        }
+
+        /// <summary>
+        /// Searches rooms by adults capacity
+        /// </summary>
+        /// <param name="adults"></param>
+        /// <returns></returns>
+        [Authorize(Policy = "AdminOrUser")]
+        [HttpGet("adults")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<IActionResult> SearchByAdultCapacityAsync(int adults)
+        {
+            var roomEntities = await roomService.SearchByAdultCapacityAsync(adults);
+            if (!roomEntities.Any())
+            {
+                logger.LogError("No rooms have adults capacity that are graeter than or equal to {Adult}.", adults);
+                return NotFound("No rooms match your search.");
+            }
+
+            var roomDtos = mapper.Map<RoomReadDto>(roomEntities);
+
+            logger.LogInformation("Returning the results back to user..");
+            return Ok(roomDtos);
+        }
+
+        /// <summary>
+        /// Searches rooms by children capacity
+        /// </summary>
+        /// <param name="children"></param>
+        /// <returns></returns>
+        [Authorize(Policy = "AdminOrUser")]
+        [HttpGet("children")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<IActionResult> SearchByChildrenCapacityAsync(int children)
+        {
+            var roomEntities = await roomService.SearchByChildrenCapacityAsync(children);
+            if (!roomEntities.Any())
+            {
+                logger.LogError("No rooms have children capacity that are greater than or equal to {Children}.", children);
+                return NotFound("No rooms match your search.");
+            }
+
+            var roomDtos = mapper.Map<RoomReadDto>(roomEntities);
+
+            logger.LogInformation("Returning the results back to user..");
+            return Ok(roomDtos);
         }
     }
 }
