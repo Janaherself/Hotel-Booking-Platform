@@ -148,7 +148,7 @@ namespace HotelBookingPlatform.API.Controllers
         /// <param name="amenities"></param>
         /// <returns></returns>
         [Authorize(Policy = "AdminOrUser")]
-        [HttpDelete("amenities")]
+        [HttpGet("amenities")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -173,7 +173,7 @@ namespace HotelBookingPlatform.API.Controllers
         /// <param name="city"></param>
         /// <returns></returns>
         [Authorize(Policy = "AdminOrUser")]
-        [HttpDelete("cities")]
+        [HttpGet("cities")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -198,7 +198,7 @@ namespace HotelBookingPlatform.API.Controllers
         /// <param name="rating"></param>
         /// <returns></returns>
         [Authorize(Policy = "AdminOrUser")]
-        [HttpDelete("ratings")]
+        [HttpGet("ratings")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
