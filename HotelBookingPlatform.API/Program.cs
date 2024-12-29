@@ -1,4 +1,7 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using HotelBookingPlatform.API.Middlewares;
+using HotelBookingPlatform.API.Validators;
 using HotelBookingPlatform.Domain.Interfaces;
 using HotelBookingPlatform.Domain.Services;
 using HotelBookingPlatform.Infrastructure;
@@ -40,6 +43,9 @@ builder.Services.AddScoped<IPasswordService, PasswordService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddValidatorsFromAssemblyContaining<LoginDtoValidator>();
 
 builder.Services.AddAuthentication(options =>
 {
