@@ -99,7 +99,7 @@ namespace HotelBookingPlatform.API.Controllers
             var userEntity = mapper.Map<UserEntity>(userUpdateDto);
 
             logger.LogInformation("Calling the update method on the user service..");
-            var isUpdated = await userService.Update(id, userEntity);
+            var isUpdated = await userService.UpdateAsync(id, userEntity);
 
             if (!isUpdated)
             {

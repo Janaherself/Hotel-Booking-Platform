@@ -59,7 +59,7 @@ namespace HotelBookingPlatform.API.Controllers
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             logger.LogInformation("Calling delete method on the review service..");
-            var isDeleted = await reviewService.Delete(id);
+            var isDeleted = await reviewService.DeleteAsync(id);
             if (!isDeleted)
             {
                 logger.LogError("Review with id {Id} does not exist.", id);

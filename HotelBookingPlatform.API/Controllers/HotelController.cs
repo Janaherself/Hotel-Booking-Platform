@@ -103,7 +103,7 @@ namespace HotelBookingPlatform.API.Controllers
             var hotelEntity = mapper.Map<HotelEntity>(hotelUpdateDto);
 
             logger.LogInformation("Calling the update method on the hotel service..");
-            var isUpdated = await hotelService.Update(id, hotelEntity);
+            var isUpdated = await hotelService.UpdateAsync(id, hotelEntity);
 
             if (!isUpdated)
             {
@@ -129,7 +129,7 @@ namespace HotelBookingPlatform.API.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             logger.LogInformation("Calling delete method on the hotel service..");
-            var isDeleted = await hotelService.Delete(id);
+            var isDeleted = await hotelService.DeleteAsync(id);
             if (!isDeleted)
             {
                 logger.LogError("Hotel with id {Id} does not exist.", id);

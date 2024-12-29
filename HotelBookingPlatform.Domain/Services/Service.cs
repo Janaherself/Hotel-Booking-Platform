@@ -21,7 +21,7 @@ namespace HotelBookingPlatform.Domain.Services
             repository.Add(entity);
         }
 
-        public async Task<bool> Delete(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
             var item = await repository.GetByIdAsync(id);
             if (item == null)
@@ -55,7 +55,7 @@ namespace HotelBookingPlatform.Domain.Services
             await repository.SaveAsync();
         }
 
-        public async Task<bool> Update(int id, T item)
+        public async Task<bool> UpdateAsync(int id, T item)
         {
             var entity = await repository.GetByIdAsync(id);
             if (entity == null)

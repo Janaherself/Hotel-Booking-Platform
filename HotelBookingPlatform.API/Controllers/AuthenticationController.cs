@@ -25,12 +25,12 @@ namespace HotelBookingPlatform.API.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public IActionResult Login([FromBody] LoginDto loginDto)
+        public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
         {
             var login = mapper.Map<LoginEntity>(loginDto);
 
             logger.LogInformation("Calling the login method in the user service..");
-            var userToken = userService.LoginAsync(login).ToString();
+            var userToken = await userService.LoginAsync(login);
             if (userToken == null)
             {
                 logger.LogInformation("User with email {Email} couldn't be authenticated.", login.Email);
@@ -50,12 +50,12 @@ namespace HotelBookingPlatform.API.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public IActionResult Register([FromBody] LoginDto loginDto)
+        public async Task<IActionResult> Register([FromBody] LoginDto loginDto)
         {
             var login = mapper.Map<LoginEntity>(loginDto);
 
             logger.LogInformation("Calling the register method in the user service..");
-            var userToken = userService.RegisterAsync(login).ToString();
+            var userToken = await userService.RegisterAsync(login);
             if (userToken == null)
             {
                 logger.LogInformation("User with email {Email} couldn't be registered.", login.Email);

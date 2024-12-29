@@ -107,7 +107,7 @@ namespace HotelBookingPlatform.API.Controllers
             var featuredDealEntity = mapper.Map<FeaturedDealEntity>(featuredDealUpdateDto);
 
             logger.LogInformation("Calling the update method on the featured deal service..");
-            var isUpdated = await featuredDealsService.Update(id, featuredDealEntity);
+            var isUpdated = await featuredDealsService.UpdateAsync(id, featuredDealEntity);
 
             if (!isUpdated)
             {
@@ -133,7 +133,7 @@ namespace HotelBookingPlatform.API.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             logger.LogInformation("Calling delete method on the featured deal service..");
-            var isDeleted = await featuredDealsService.Delete(id);
+            var isDeleted = await featuredDealsService.DeleteAsync(id);
             if (!isDeleted)
             {
                 logger.LogError("Featured deal with id {Id} does not exist.", id);
