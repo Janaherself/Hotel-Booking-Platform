@@ -8,6 +8,6 @@ namespace HotelBookingPlatform.Infrastructure.Interfaces
         Task<IEnumerable<Room>> SearchByAdultCapacityAsync(int adults);
         Task<IEnumerable<Room>> SearchByChildrenCapacityAsync(int children);
         Task<IEnumerable<Room>> SearchByTypeAsync(string type);
-        Task<IEnumerable<Room>> GetRoomsById(IEnumerable<int> roomIds);
+        Task<List<Room>> GetRoomsById(IEnumerable<int> roomIds);
     }
 }
