@@ -14,21 +14,21 @@ namespace HotelBookingPlatform.Domain.Services
         {
             logger.LogInformation("Calling SearchByAmenitiesAsync method on hotel repository..");
             var hotels = await hotelRepository.SearchByAmenitiesAsync(amenities);
-            return mapper.Map<IEnumerable<HotelEntity>>(hotels);
+            return _mapper.Map<IEnumerable<HotelEntity>>(hotels);
         }
 
         public async Task<IEnumerable<HotelEntity>> SearchByCityAsync(string city)
         {
             logger.LogInformation("Calling SearchByCityAsync method on hotel repository..");
             var hotels = await hotelRepository.SearchByCityAsync(city);
-            return mapper.Map<IEnumerable<HotelEntity>>(hotels);
+            return _mapper.Map<IEnumerable<HotelEntity>>(hotels);
         }
 
         public async Task<IEnumerable<HotelEntity>> SearchByRatingAsync(float rating)
         {
             logger.LogInformation("Calling SearchByRatingAsync method on hotel repository..");
             var hotels = await hotelRepository.SearchByRatingAsync(rating);
-            return mapper.Map<IEnumerable<HotelEntity>>(hotels);
+            return _mapper.Map<IEnumerable<HotelEntity>>(hotels);
         }
     }
 }

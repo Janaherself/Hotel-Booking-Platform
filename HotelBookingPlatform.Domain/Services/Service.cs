@@ -11,13 +11,14 @@ namespace HotelBookingPlatform.Domain.Services
         IMapper mapper, 
         ILogger<Service<T, TEntity>> logger)
         : IService<T, TEntity> 
-        where T : class          // T => domain layer entity (Domain.ItemEntity)
+        where T : class                // T => domain layer entity (Domain.ItemEntity)
         where TEntity : AuditEntity    // TEntity => infrastructure layer entity (Infrastructure.Item)
     {
+        protected readonly IMapper _mapper = mapper;
         public virtual void Add(T item)
         {
             logger.LogInformation("Calling Add method on the {Repository} repository..", typeof(TEntity));
-            var entity = mapper.Map<TEntity>(item);
+            var entity = _mapper.Map<TEntity>(item);
             repository.Add(entity);
         }
 
@@ -39,14 +40,14 @@ namespace HotelBookingPlatform.Domain.Services
         {
             logger.LogInformation("Calling GetAll method on the {Repository} repository..", typeof(TEntity));
             var entities = await repository.GetAllAsync(pageSize, pageNumer);
-            return mapper.Map<IEnumerable<T>>(entities);
+            return _mapper.Map<IEnumerable<T>>(entities);
         }
 
         public async Task<T?> GetByIdAsync(int id)
         {
             logger.LogInformation("Calling GetById method on the {Repository} repository..", typeof(TEntity));
             var entity = await repository.GetByIdAsync(id) ?? throw new ItemNotFoundException($"Item {typeof(TEntity)} with id {id} was not found.");
-            return mapper.Map<T>(entity);
+            return _mapper.Map<T>(entity);
         }
 
         public async Task SaveAsync()
@@ -65,7 +66,7 @@ namespace HotelBookingPlatform.Domain.Services
             }
 
             logger.LogInformation("Calling Update method on the {Repository} repository..", typeof(TEntity));
-            mapper.Map(item, entity);
+            _mapper.Map(item, entity);
             repository.Update(entity);
             return true;
         }

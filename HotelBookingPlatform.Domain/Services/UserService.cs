@@ -28,7 +28,7 @@ namespace HotelBookingPlatform.Domain.Services
             }
 
             logger.LogInformation("User with email {Email} is found.", email);
-            var foundUser = mapper.Map<UserEntity>(user);
+            var foundUser = _mapper.Map<UserEntity>(user);
             return foundUser;
         }
 

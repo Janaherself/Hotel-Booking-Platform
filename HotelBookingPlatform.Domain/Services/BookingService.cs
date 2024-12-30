@@ -15,14 +15,14 @@ namespace HotelBookingPlatform.Domain.Services
         {
             logger.LogInformation("Calling GetRecentlyVisitedHotelsAsync method on booking repository..");
             var hotels = await bookingRepository.GetRecentlyVisitedHotelsAsync(userId);
-            return mapper.Map<IEnumerable<HotelEntity>>(hotels);
+            return _mapper.Map<IEnumerable<HotelEntity>>(hotels);
         }
 
         public async Task<IEnumerable<CityEntity>> GetTopVisitedCitiesAsync()
         {
             logger.LogInformation("Calling GetTopVisitedCitiesAsync method on booking repository..");
             var cities = await bookingRepository.GetTopVisitedCitiesAsync();
-            return mapper.Map<IEnumerable<CityEntity>>(cities);
+            return _mapper.Map<IEnumerable<CityEntity>>(cities);
         }
 
         public override async void Add(BookingEntity bookingEntity)
@@ -34,7 +34,7 @@ namespace HotelBookingPlatform.Domain.Services
                 throw new InvalidRoomIdException();
             }
 
-            bookingEntity.Rooms = mapper.Map<List<RoomEntity>>(rooms);
+            bookingEntity.Rooms = _mapper.Map<List<RoomEntity>>(rooms);
 
             logger.LogInformation("Calling the Add method on the base service..");
             base.Add(bookingEntity);
@@ -49,7 +49,7 @@ namespace HotelBookingPlatform.Domain.Services
                 throw new InvalidOperationException();
             }
 
-            bookingEntity.Rooms = mapper.Map<List<RoomEntity>>(rooms);
+            bookingEntity.Rooms = _mapper.Map<List<RoomEntity>>(rooms);
 
             logger.LogInformation("Calling the Update method on the base service..");
             return await base.UpdateAsync(id, bookingEntity);

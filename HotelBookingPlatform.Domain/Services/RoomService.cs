@@ -14,28 +14,28 @@ namespace HotelBookingPlatform.Domain.Services
         {
             logger.LogInformation("Calling SearchByAdultCapacityAsync method on room repository..");
             var rooms = await roomRepository.SearchByAdultCapacityAsync(adults);
-            return mapper.Map<IEnumerable<RoomEntity>>(rooms);
+            return _mapper.Map<IEnumerable<RoomEntity>>(rooms);
         }
 
         public async Task<IEnumerable<RoomEntity>> SearchByChildrenCapacityAsync(int children)
         {
             logger.LogInformation("Calling SearchByChildrenCapacityAsync method on room repository..");
             var rooms = await roomRepository.SearchByChildrenCapacityAsync(children);
-            return mapper.Map<IEnumerable<RoomEntity>>(rooms);
+            return _mapper.Map<IEnumerable<RoomEntity>>(rooms);
         }
 
         public async Task<IEnumerable<RoomEntity>> SearchByPriceAsync(decimal price)
         {
             logger.LogInformation("Calling SearchByPriceAsync method on room repository..");
             var rooms = await roomRepository.SearchByPriceAsync(price);
-            return mapper.Map<IEnumerable<RoomEntity>>(rooms);
+            return _mapper.Map<IEnumerable<RoomEntity>>(rooms);
         }
 
         public async Task<IEnumerable<RoomEntity>> SearchByTypeAsync(string type)
         {
             logger.LogInformation("Calling SearchByTypeAsync method on room repository..");
             var rooms = await roomRepository.SearchByTypeAsync(type);
-            return mapper.Map<IEnumerable<RoomEntity>>(rooms);
+            return _mapper.Map<IEnumerable<RoomEntity>>(rooms);
         }
     }
 }
