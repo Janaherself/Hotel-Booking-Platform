@@ -4,6 +4,7 @@ using HotelBookingPlatform.Domain.DomainEntities;
 using HotelBookingPlatform.Domain.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace HotelBookingPlatform.API.Controllers
 {
@@ -75,10 +76,17 @@ namespace HotelBookingPlatform.API.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> Add([FromBody] BookingCreateDto bookingCreateDto)
         {
+            var userIdClaim = User.FindFirstValue("UserId");
+
+            if (string.IsNullOrEmpty(userIdClaim) || !int.TryParse(userIdClaim, out int userId))
+            {
+                return Unauthorized("Invalid or missing userId claim!");
+            }
+
             var bookingEntity = mapper.Map<BookingEntity>(bookingCreateDto);
 
             logger.LogInformation("Calling Add method on the booking service..");
-            bookingService.Add(bookingEntity);
+            bookingService.Add(bookingEntity, userId);
 
             logger.LogInformation("Calling SaveAsync method on the booking service..");
             await bookingService.SaveAsync();
@@ -89,30 +97,36 @@ namespace HotelBookingPlatform.API.Controllers
         /// <summary>
         /// Updates a booking in the database
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="bookingId"></param>
         /// <param name="bookingUpdateDto"></param>
         /// <returns></returns>
         [Authorize(Policy = "User")]
-        [HttpPut("{id}")]
+        [HttpPut("{bookingId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] BookingUpdateDto bookingUpdateDto)
+        public async Task<IActionResult> Update([FromRoute] int bookingId, [FromBody] BookingUpdateDto bookingUpdateDto)
         {
-            var bookingEntity = mapper.Map<BookingEntity>(bookingUpdateDto);
+            var userIdClaim = User.FindFirstValue("UserId");
 
+            if (string.IsNullOrEmpty(userIdClaim) || !int.TryParse(userIdClaim, out int userId))
+            {
+                return Unauthorized("Invalid or missing userId claim!");
+            }
+
+            var bookingEntity = mapper.Map<BookingEntity>(bookingUpdateDto);
+            
             logger.LogInformation("Calling the update method on the booking service..");
-            var isUpdated = await bookingService.UpdateAsync(id, bookingEntity);
+            var isUpdated = await bookingService.UpdateAsync(bookingId, bookingEntity, userId);
 
             if (!isUpdated)
             {
-                return NotFound($"Booking with ID {id} does not exist!");
+                return Unauthorized($"You are unauthorized to update booking with id {bookingId}!");
             }
 
             logger.LogInformation("Calling SaveAsync method on the booking service..");
             await bookingService.SaveAsync();
 
-            return Ok($"Booking with ID {id} has been updated successfully!");
+            return Ok($"Booking with ID {bookingId} has been updated successfully!");
         }
 
         /// <summary>

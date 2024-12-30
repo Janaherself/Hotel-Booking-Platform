@@ -15,7 +15,7 @@ namespace HotelBookingPlatform.Domain.Services
         where TEntity : AuditEntity    // TEntity => infrastructure layer entity (Infrastructure.Item)
     {
         protected readonly IMapper _mapper = mapper;
-        public virtual void Add(T item)
+        public void Add(T item)
         {
             logger.LogInformation("Calling Add method on the {Repository} repository..", typeof(TEntity));
             var entity = _mapper.Map<TEntity>(item);
@@ -43,7 +43,7 @@ namespace HotelBookingPlatform.Domain.Services
             return _mapper.Map<IEnumerable<T>>(entities);
         }
 
-        public async Task<T?> GetByIdAsync(int id)
+        public async Task<T> GetByIdAsync(int id)
         {
             logger.LogInformation("Calling GetById method on the {Repository} repository..", typeof(TEntity));
             var entity = await repository.GetByIdAsync(id) ?? throw new ItemNotFoundException($"Item {typeof(TEntity)} with id {id} was not found.");
@@ -56,7 +56,7 @@ namespace HotelBookingPlatform.Domain.Services
             await repository.SaveAsync();
         }
 
-        public virtual async Task<bool> UpdateAsync(int id, T item)
+        public async Task<bool> UpdateAsync(int id, T item)
         {
             var entity = await repository.GetByIdAsync(id);
             if (entity == null)

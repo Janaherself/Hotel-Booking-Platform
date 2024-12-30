@@ -4,6 +4,7 @@ using HotelBookingPlatform.Domain.Exceptions;
 using HotelBookingPlatform.Domain.Interfaces;
 using HotelBookingPlatform.Infrastructure.Entities;
 using HotelBookingPlatform.Infrastructure.Interfaces;
+using HotelBookingPlatform.Infrastructure.Repositories;
 using Microsoft.Extensions.Logging;
 
 namespace HotelBookingPlatform.Domain.Services
@@ -25,34 +26,48 @@ namespace HotelBookingPlatform.Domain.Services
             return _mapper.Map<IEnumerable<CityEntity>>(cities);
         }
 
-        public override async void Add(BookingEntity bookingEntity)
+        public async void Add(BookingEntity bookingEntity, int userId)
         {
             var rooms = await roomRepository.GetRoomsById(bookingEntity.RoomIds);
-            if (rooms.Count() != bookingEntity.RoomIds.Count)
+            if (rooms.Count != bookingEntity.RoomIds.Count)
             {
                 logger.LogError("One or more rooms have incorrect IDs.");
                 throw new InvalidRoomIdException();
             }
 
             bookingEntity.Rooms = _mapper.Map<List<RoomEntity>>(rooms);
+            bookingEntity.UserId = userId;
 
             logger.LogInformation("Calling the Add method on the base service..");
             base.Add(bookingEntity);
         }
 
-        public override async Task<bool> UpdateAsync(int id, BookingEntity bookingEntity)
+        public async Task<bool> UpdateAsync(int bookingId, BookingEntity bookingEntity, int userId)
         {
-            var rooms = await roomRepository.GetRoomsById(bookingEntity.RoomIds);
-            if (rooms.Count() != bookingEntity.RoomIds.Count)
+            var booking = await bookingRepository.GetByIdAsync(bookingId) ?? throw new ItemNotFoundException();
+
+            if (booking.UserId != userId)
             {
-                logger.LogError("One or more rooms have incorrect IDs.");
-                throw new InvalidOperationException();
+                return false;
             }
 
-            bookingEntity.Rooms = _mapper.Map<List<RoomEntity>>(rooms);
+            if (bookingEntity.RoomIds != null)
+            {
+                var rooms = await roomRepository.GetRoomsById(bookingEntity.RoomIds);
+                if (rooms.Count != bookingEntity.RoomIds.Count)
+                {
+                    logger.LogError("One or more rooms have incorrect IDs.");
+                    throw new InvalidRoomIdException();
+                }
 
-            logger.LogInformation("Calling the Update method on the base service..");
-            return await base.UpdateAsync(id, bookingEntity);
+                booking.Rooms = rooms;
+            }
+
+            _mapper.Map(bookingEntity, booking);
+
+            logger.LogInformation("Calling the Update method on the base repository..");
+            bookingRepository.Update(booking);
+            return true;
         }
     }
 }
