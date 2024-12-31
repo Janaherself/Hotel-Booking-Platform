@@ -22,7 +22,7 @@ namespace HotelBookingPlatform.API.Controllers
         /// <param name="loginDto"></param>
         /// <returns></returns>
         [Route("login")]
-        [HttpGet]
+        [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
