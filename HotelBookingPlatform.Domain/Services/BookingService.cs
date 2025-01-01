@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace HotelBookingPlatform.Domain.Services
 {
-    public class BookingService(IBookinglRepository bookingRepository,IRoomRepository roomRepository, IMapper mapper, ILogger<BookingService> logger)
+    public class BookingService(IBookingRepository bookingRepository,IRoomRepository roomRepository, IMapper mapper, ILogger<BookingService> logger)
         : Service<BookingEntity, Booking>(bookingRepository, mapper, logger), IBookingService
     {
         public async Task<IEnumerable<HotelEntity>> GetRecentlyVisitedHotelsAsync(int userId)

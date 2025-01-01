@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 namespace HotelBookingPlatform.Infrastructure.Repositories
 {
     public class BookingRepository(AppDbContext context, ILogger<BookingRepository> logger) 
-        : Repository<Booking>(context, logger), IBookinglRepository
+        : Repository<Booking>(context, logger), IBookingRepository
     {
         public async Task<IEnumerable<Hotel?>> GetRecentlyVisitedHotelsAsync(int userId)
         {
