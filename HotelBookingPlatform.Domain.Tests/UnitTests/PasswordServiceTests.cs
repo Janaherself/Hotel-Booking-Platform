@@ -1,8 +1,6 @@
 ﻿using Moq;
 using Microsoft.Extensions.Logging;
-using System.Security.Cryptography;
 using FluentAssertions;
-using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using HotelBookingPlatform.Domain.Services;
 
 namespace HotelBookingPlatform.Domain.Tests.UnitTests
