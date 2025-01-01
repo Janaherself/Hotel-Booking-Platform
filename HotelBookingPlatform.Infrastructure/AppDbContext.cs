@@ -15,11 +15,6 @@ namespace HotelBookingPlatform.Infrastructure
         public DbSet<RoomImage> RoomImages { get; set; }
         public DbSet<User> Users { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer("Server=LAPTOP-5RBHM2O9;Database=HotelBookingDB;Trusted_Connection=True;TrustServerCertificate=True;");
-        }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
