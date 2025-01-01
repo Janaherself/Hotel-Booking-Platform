@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using FluentAssertions;
 
-namespace HotelBookingPlatform.Domain.Test
+namespace HotelBookingPlatform.Domain.Tests.UnitTests
 {
     public class RoleServiceTests
     {

@@ -5,7 +5,7 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using HotelBookingPlatform.Domain.Services;
 
-namespace HotelBookingPlatform.Domain.Test
+namespace HotelBookingPlatform.Domain.Tests.UnitTests
 {
     public class PasswordServiceTests
     {

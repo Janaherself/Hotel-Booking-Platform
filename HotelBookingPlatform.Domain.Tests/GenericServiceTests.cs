@@ -6,7 +6,7 @@ using HotelBookingPlatform.Infrastructure.Interfaces;
 using Microsoft.Extensions.Logging;
 using Moq;
 
-namespace HotelBookingPlatform.Domain.Test
+namespace HotelBookingPlatform.Domain.Tests.UnitTests
 {
     public class DomainEntity { }           // domain entity mock
     public class Entity : AuditEntity { }   // infrastructure entity mock

@@ -3,7 +3,7 @@ using HotelBookingPlatform.Domain.Services;
 using Microsoft.Extensions.Logging;
 using Moq;
 
-namespace HotelBookingPlatform.Domain.Test
+namespace HotelBookingPlatform.Domain.Tests.UnitTests
 {
     public class TokenServiceTests
     {
