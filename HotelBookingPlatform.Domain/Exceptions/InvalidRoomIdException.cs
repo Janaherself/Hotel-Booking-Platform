@@ -1,6 +1,6 @@
 ﻿namespace HotelBookingPlatform.Domain.Exceptions
 {
-    class InvalidRoomIdException : Exception
+    public class InvalidRoomIdException : Exception
     {
         public InvalidRoomIdException() : base("One or more RoomIds are invalid.")
         {   
