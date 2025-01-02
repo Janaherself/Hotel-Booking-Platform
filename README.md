@@ -47,7 +47,7 @@
 
    <p>The figure down below demonstrates the previous layeres and the interactions between them in Innfinity:</p>
 
-   <img src="/images/MyLayeredArchitecture.png" alt="Innfinity's Architecture">
+   <img height="400px" src="/images/MyLayeredArchitecture.png" alt="Innfinity's Architecture">
  
   </ul>
 
