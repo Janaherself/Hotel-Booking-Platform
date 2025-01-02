@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Moq;
 
-namespace HotelBookingPlatform.API.Tests
+namespace HotelBookingPlatform.API.Tests.UnitTests
 {
     public class GlobalExceptionHandlingMiddlewareTests
     {
