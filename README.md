@@ -1,5 +1,5 @@
 # Welcome to Innfinity! 🌌
-  <p><em>Your one-stop solution for an infinite choices of inns. Just don't forget to pack your magnet, to attract all the good deals 🤝🧲</em></p>
+  <p><em>Your one-stop solution for an infinite choices of inns. Just don't forget to pack a magnet, to attract all the good deals 🤝🧲</em></p>
 
 <br>
 
