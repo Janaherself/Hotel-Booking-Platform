@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using FluentAssertions;
 
-namespace HotelBookingPlatform.API.Tests
+namespace HotelBookingPlatform.API.Tests.UnitTests
 {
     public class AuthenticationControllerTests
     {
@@ -66,7 +66,7 @@ namespace HotelBookingPlatform.API.Tests
 
             var result = await _controller.Register(loginDto);
 
-          
+
             result.Should().BeOfType<OkObjectResult>().Which.Value.Should().BeEquivalentTo(userToken);
         }
 
