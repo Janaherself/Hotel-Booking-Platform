@@ -47,7 +47,7 @@ namespace HotelBookingPlatform.API.Controllers
         /// <param name="loginDto"></param>
         /// <returns></returns>
         [Route("register")]
-        [HttpGet]
+        [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> Register([FromBody] LoginDto loginDto)
