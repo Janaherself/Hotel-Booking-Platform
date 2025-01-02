@@ -11,7 +11,7 @@
   <p>Below, you can find the Entity Relationship Diagram (ERD) that illustrates the database design. It captures all essential relationships and entities, ensuring a solid foundation for   
     data storage and retrieval:</p>
 
-  <img src="/images/HotelBookingPlatformERD.png" alt="Hotel Booking Platform ERD">
+  <img src="/images/HotelBookingPlatformERD.png" alt="Innfinity's ERD">
 
 <br>
 
@@ -44,6 +44,11 @@
         <li><strong>🗃 Infrastructure:</strong> Managing the database repositories like a pro.</li>
       </ul>
     </li>
+
+   <p>The figure down below demonstrates the previous layeres and the interactions between them in Innfinity:</p>
+
+   <img src="/images/MyLayeredArchitecture.png" alt="Innfinity's Architecture">
+ 
   </ul>
 
 <br> 
