@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using System.Security.Claims;
 
-namespace HotelBookingPlatform.API.Tests
+namespace HotelBookingPlatform.API.Tests.UnitTests
 {
     public class BookingControllerTests
     {
