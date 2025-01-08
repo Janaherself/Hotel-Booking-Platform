@@ -60,7 +60,7 @@ namespace HotelBookingPlatform.Domain.Tests.UnitTests
         }
 
         [Fact]
-        public void Add_ShouldCallBaseAdd_WhenRoomIdsAreValid()
+        public async Task Add_ShouldCallBaseAdd_WhenRoomIdsAreValid()
         {
             var bookingEntity = new BookingEntity { RoomIds = [1, 2] };
             var userId = 1;
@@ -70,7 +70,7 @@ namespace HotelBookingPlatform.Domain.Tests.UnitTests
             _roomRepositoryMock.Setup(repo => repo.GetRoomsById(bookingEntity.RoomIds)).ReturnsAsync(rooms);
             _mapperMock.Setup(mapper => mapper.Map<List<RoomEntity>>(rooms)).Returns(roomEntities);
 
-            _bookingService.Add(bookingEntity, userId);
+            await _bookingService.AddAsync(bookingEntity, userId);
 
             bookingEntity.Rooms.Should().BeEquivalentTo(roomEntities);
             bookingEntity.UserId.Should().Be(userId);

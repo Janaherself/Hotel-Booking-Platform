@@ -26,7 +26,7 @@ namespace HotelBookingPlatform.Domain.Services
             return _mapper.Map<IEnumerable<CityEntity>>(cities);
         }
 
-        public async void Add(BookingEntity bookingEntity, int userId)
+        public async Task AddAsync(BookingEntity bookingEntity, int userId)
         {
             var rooms = await roomRepository.GetRoomsById(bookingEntity.RoomIds);
             if (rooms.Count != bookingEntity.RoomIds.Count)

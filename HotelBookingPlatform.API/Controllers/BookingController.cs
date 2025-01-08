@@ -86,7 +86,7 @@ namespace HotelBookingPlatform.API.Controllers
             var bookingEntity = mapper.Map<BookingEntity>(bookingCreateDto);
 
             logger.LogInformation("Calling Add method on the booking service..");
-            bookingService.Add(bookingEntity, userId);
+            await bookingService.AddAsync(bookingEntity, userId);
 
             logger.LogInformation("Calling SaveAsync method on the booking service..");
             await bookingService.SaveAsync();
