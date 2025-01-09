@@ -81,7 +81,7 @@ namespace HotelBookingPlatform.API
                 {
                     options.SwaggerDoc("v1", new OpenApiInfo
                     {
-                        Title = "Hotel Booking API",
+                        Title = "Innfinity API",
                         Version = "v1",
                     });
                     var xmlFile = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
