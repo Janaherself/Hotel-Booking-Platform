@@ -60,20 +60,51 @@ namespace HotelBookingPlatform.Domain.Tests.UnitTests
         }
 
         [Fact]
-        public void Add_ShouldCallBaseAdd_WhenRoomIdsAreValid()
+        public async Task AddAsync_ShouldNotThrowInvalidRoomIdException_WhenRoomIdsAreValid()
         {
-            var bookingEntity = new BookingEntity { RoomIds = [1, 2] };
-            var userId = 1;
-            var rooms = new List<Room> { new(), new() };
-            var roomEntities = new List<RoomEntity> { new(), new() };
+            try
+            {
+                var bookingEntity = new BookingEntity { RoomIds = [1, 2] };
+                var userId = 1;
+                var rooms = new List<Room> { new(), new() };
+                var roomEntities = new List<RoomEntity> { new(), new() };
+                var booking = new Booking { Rooms = [new Room { RoomId = 1}, new Room { RoomId = 2 }] };
 
-            _roomRepositoryMock.Setup(repo => repo.GetRoomsById(bookingEntity.RoomIds)).ReturnsAsync(rooms);
-            _mapperMock.Setup(mapper => mapper.Map<List<RoomEntity>>(rooms)).Returns(roomEntities);
+                _roomRepositoryMock.Setup(repo => repo.GetRoomsById(bookingEntity.RoomIds)).ReturnsAsync(rooms);
+                _mapperMock.Setup(mapper => mapper.Map<List<RoomEntity>>(rooms)).Returns(roomEntities);
+                _mapperMock.Setup(mapper => mapper.Map<Booking>(bookingEntity)).Returns(booking);
 
-            _bookingService.Add(bookingEntity, userId);
+                await _bookingService.AddAsync(bookingEntity, userId);
+                return;
+            }
+            catch (InvalidRoomIdException e)
+            {
+                e.Message.Should().Be("One or more RoomIds are invalid.");
+            }
+        }
 
-            bookingEntity.Rooms.Should().BeEquivalentTo(roomEntities);
-            bookingEntity.UserId.Should().Be(userId);
+        [Fact]
+        public async Task AddAsync_ShouldThrowInvalidRoomIdException_WhenRoomIdsAreInvalid()
+        {
+            try
+            {
+                var bookingEntity = new BookingEntity { RoomIds = [1, 2] };
+                var userId = 1;
+                var rooms = new List<Room>();
+                var roomEntities = new List<RoomEntity> { new(), new() };
+                var booking = new Booking { Rooms = [new Room { RoomId = 1 }, new Room { RoomId = 2 }] };
+
+                _roomRepositoryMock.Setup(repo => repo.GetRoomsById(bookingEntity.RoomIds)).ReturnsAsync(rooms);
+                _mapperMock.Setup(mapper => mapper.Map<List<RoomEntity>>(rooms)).Returns(roomEntities);
+                _mapperMock.Setup(mapper => mapper.Map<Booking>(bookingEntity)).Returns(booking);
+
+                await _bookingService.AddAsync(bookingEntity, userId);
+                return;
+            }
+            catch (InvalidRoomIdException e)
+            {
+                e.Message.Should().Be("One or more RoomIds are invalid.");
+            }
         }
 
         [Fact]

@@ -8,13 +8,13 @@ namespace HotelBookingPlatform.Infrastructure.Repositories
     public class BookingRepository(AppDbContext context, ILogger<BookingRepository> logger) 
         : Repository<Booking>(context, logger), IBookingRepository
     {
-        public async Task<IEnumerable<Hotel?>> GetRecentlyVisitedHotelsAsync(int userId)
+        public async Task<IEnumerable<Hotel?>> GetRecentlyVisitedHotelsAsync(int? userId)
         {
             logger.LogInformation("Getting recently visited hotels for user with Id {Id}..", userId);
             var recentlyVisitedHotels = await _dbSet
             .Where(b => b.UserId == userId)
             .OrderByDescending(b => b.CheckOutDate)
-            .SelectMany(b => b.Rooms)
+            .SelectMany(b => b.Rooms!)
             .Select(r => r.Hotel)
             .Distinct()
             .Take(5)
@@ -27,7 +27,7 @@ namespace HotelBookingPlatform.Infrastructure.Repositories
         {
             logger.LogInformation("Getting top visited cities in the platform..");
             var topCities = await _dbSet
-            .SelectMany(b => b.Rooms)
+            .SelectMany(b => b.Rooms!)
             .Select(r => r.Hotel)
             .GroupBy(h => h!.City)
             .OrderByDescending(group => group.Count())
@@ -36,7 +36,27 @@ namespace HotelBookingPlatform.Infrastructure.Repositories
             .ToListAsync();
 
             return topCities;
+        }
 
+        public void AddBooking(Booking booking)
+        {
+            logger.LogInformation("Waiting for context to attach rooms of booking with id {BookingId}..", booking.BookingId);
+            _context.AttachRange(booking.Rooms!);
+
+            logger.LogInformation("Calling Add method on the base repository..");
+            base.Add(booking);
+        }
+
+        public void UpdateBooking(Booking booking)
+        {
+            if (booking.Rooms != null)
+            {  
+                logger.LogInformation("Waiting for context to attach rooms of booking with id {BookingId}..", booking.BookingId);
+                _context.AttachRange(booking.Rooms);
+            }
+            
+            logger.LogInformation("Calling Update method on the base repository..");
+            base.Update(booking);
         }
     }
 }

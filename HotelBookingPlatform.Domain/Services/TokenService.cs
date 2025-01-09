@@ -9,7 +9,7 @@ namespace HotelBookingPlatform.Domain.Services
 {
     public class TokenService(ILogger<TokenService> logger) : ITokenService
     {
-        public string GenerateToken(int id, string email, string role)
+        public string GenerateToken(int? id, string email, string role)
         {
             logger.LogInformation("Generating a token for user with email {Email} is in progress..", email);
 
@@ -22,7 +22,7 @@ namespace HotelBookingPlatform.Domain.Services
                 Subject = new ClaimsIdentity
                 ([
                     new Claim(JwtRegisteredClaimNames.Email, email),
-                    new Claim("UserId", id.ToString()),
+                    new Claim("UserId", id.ToString()!),
                     new Claim("Role", role)
                 ]),
                 Expires = DateTime.UtcNow.AddMinutes(30),

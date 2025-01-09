@@ -61,7 +61,7 @@ namespace HotelBookingPlatform.API.Tests.UnitTests
         {
             int bookingId = 1;
             var bookingEntity = new BookingEntity();
-            var bookingDto = new BookingReadDto(1, 1, new DateOnly(2024, 9, 9), new DateOnly(2024, 9, 10), 2500, "Completed", null, null);
+            var bookingDto = new BookingReadDto(1, 1, new DateOnly(2024, 9, 9), new DateOnly(2024, 9, 10), 2500, "Completed", [], new DateTime(), null);
 
             _mockBookingService.Setup(s => s.GetByIdAsync(bookingId)).ReturnsAsync(bookingEntity);
             _mockMapper.Setup(m => m.Map<BookingReadDto>(bookingEntity)).Returns(bookingDto);
@@ -84,7 +84,7 @@ namespace HotelBookingPlatform.API.Tests.UnitTests
         [Fact]
         public async Task Add_ShouldReturnOk_WhenBookingIsAddedSuccessfully()
         {
-            var bookingCreateDto = new BookingCreateDto(new DateOnly(2024, 9, 9), new DateOnly(2024, 9, 9), 1220, null);
+            var bookingCreateDto = new BookingCreateDto(new DateOnly(2024, 9, 9), new DateOnly(2024, 9, 9), 1220, [1]);
             var bookingEntity = new BookingEntity();
 
             _controller.ControllerContext.HttpContext.User = new ClaimsPrincipal(new ClaimsIdentity([new("UserId", "1")]));
@@ -174,7 +174,7 @@ namespace HotelBookingPlatform.API.Tests.UnitTests
                 }
             };
 
-            var bookingCreateDto = new BookingCreateDto(new DateOnly(2024, 9, 9), new DateOnly(2024, 9, 9), 1220, null);
+            var bookingCreateDto = new BookingCreateDto(new DateOnly(2024, 9, 9), new DateOnly(2024, 9, 9), 1220, [1]);
 
             var result = await _controller.Add(bookingCreateDto);
 

@@ -4,7 +4,6 @@ using HotelBookingPlatform.Domain.Exceptions;
 using HotelBookingPlatform.Domain.Interfaces;
 using HotelBookingPlatform.Infrastructure.Entities;
 using HotelBookingPlatform.Infrastructure.Interfaces;
-using HotelBookingPlatform.Infrastructure.Repositories;
 using Microsoft.Extensions.Logging;
 
 namespace HotelBookingPlatform.Domain.Services
@@ -26,20 +25,22 @@ namespace HotelBookingPlatform.Domain.Services
             return _mapper.Map<IEnumerable<CityEntity>>(cities);
         }
 
-        public async void Add(BookingEntity bookingEntity, int userId)
+        public async Task AddAsync(BookingEntity bookingEntity, int userId)
         {
-            var rooms = await roomRepository.GetRoomsById(bookingEntity.RoomIds);
-            if (rooms.Count != bookingEntity.RoomIds.Count)
+            var rooms = await roomRepository.GetRoomsById(bookingEntity.RoomIds!);
+            if (rooms.Count != bookingEntity.RoomIds!.Count)
             {
                 logger.LogError("One or more rooms have incorrect IDs.");
                 throw new InvalidRoomIdException();
             }
 
-            bookingEntity.Rooms = _mapper.Map<List<RoomEntity>>(rooms);
-            bookingEntity.UserId = userId;
+            var booking = _mapper.Map<Booking>(bookingEntity);
 
-            logger.LogInformation("Calling the Add method on the base service..");
-            base.Add(bookingEntity);
+            booking.Rooms = rooms;
+            booking.UserId = userId;
+
+            logger.LogInformation("Calling AddAsync method on BookingRepository..");
+            bookingRepository.AddBooking(booking);
         }
 
         public async Task<bool> UpdateAsync(int bookingId, BookingEntity bookingEntity, int userId)
@@ -51,7 +52,7 @@ namespace HotelBookingPlatform.Domain.Services
                 return false;
             }
 
-            if (bookingEntity.RoomIds != null)
+            if (bookingEntity.RoomIds != null && bookingEntity.RoomIds.Count != 0)
             {
                 var rooms = await roomRepository.GetRoomsById(bookingEntity.RoomIds);
                 if (rooms.Count != bookingEntity.RoomIds.Count)
@@ -65,8 +66,8 @@ namespace HotelBookingPlatform.Domain.Services
 
             _mapper.Map(bookingEntity, booking);
 
-            logger.LogInformation("Calling the Update method on the base repository..");
-            bookingRepository.Update(booking);
+            logger.LogInformation("Calling UpdateBooking method on BookingRepository..");
+            bookingRepository.UpdateBooking(booking);
             return true;
         }
     }
