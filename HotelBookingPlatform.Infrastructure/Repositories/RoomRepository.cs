@@ -29,13 +29,13 @@ namespace HotelBookingPlatform.Infrastructure.Repositories
         public async Task<IEnumerable<Room>> SearchByTypeAsync(string type)
         {
             logger.LogInformation("Searching rooms by type..");
-            return await _dbSet.Where(r => r.Type.Contains(type)).ToListAsync();
+            return await _dbSet.Where(r => r.Type!.Contains(type)).ToListAsync();
         }
 
-        public async Task<List<Room>> GetRoomsById(IEnumerable<int> roomIds)
+        public async Task<List<Room>> GetRoomsById(List<int> roomIds)
         {
             logger.LogInformation("Retrieving rooms by their IDs..");
-            return await _dbSet.Where(r => roomIds.Contains(r.RoomId)).ToListAsync();
+            return await _dbSet.Where(r => roomIds.Contains((int)r.RoomId!)).ToListAsync();
         }
     }
 }

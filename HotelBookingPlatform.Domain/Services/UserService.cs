@@ -37,7 +37,7 @@ namespace HotelBookingPlatform.Domain.Services
 
             var user = await GetByEmailAsync(loginEntity.Email);
 
-            if (!passwordService.VerifyPassword(loginEntity.Password, user.PasswordHash))
+            if (!passwordService.VerifyPassword(loginEntity.Password, user.PasswordHash!))
             {
                 logger.LogInformation("Invalid Password for user with email {Email}.", loginEntity.Email);
                 return null;
@@ -45,7 +45,7 @@ namespace HotelBookingPlatform.Domain.Services
 
             logger.LogInformation("User with email {Email} is authenticated.", loginEntity.Email);
 
-            var token = tokenService.GenerateToken(user.UserId, user.Email, user.Role);
+            var token = tokenService.GenerateToken(user.UserId, user.Email!, user.Role!);
 
             return token;
         }

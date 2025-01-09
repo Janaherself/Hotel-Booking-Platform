@@ -11,13 +11,13 @@ namespace HotelBookingPlatform.Infrastructure.Repositories
         public async Task<IEnumerable<Hotel>> SearchByAmenitiesAsync(string amenities)
         {
             logger.LogInformation("Searching hotels by amenity..");
-            return await _dbSet.Where(h => h.Amenities.Contains(amenities)).ToListAsync();
+            return await _dbSet.Where(h => h.Amenities!.Contains(amenities)).ToListAsync();
         }
 
         public async Task<IEnumerable<Hotel>> SearchByCityAsync(string city)
         {
             logger.LogInformation("Searching hotels by city..");
-            return await _dbSet.Where(h => h.City!.Name.Contains(city)).ToListAsync();
+            return await _dbSet.Where(h => h.City!.Name!.Contains(city)).ToListAsync();
         }
 
         public async Task<IEnumerable<Hotel>> SearchByRatingAsync(float rating)
