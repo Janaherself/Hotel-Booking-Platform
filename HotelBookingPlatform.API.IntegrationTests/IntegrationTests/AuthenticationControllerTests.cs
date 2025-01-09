@@ -3,16 +3,11 @@ using Newtonsoft.Json;
 using System.Net;
 using System.Text;
 
-namespace HotelBookingPlatform.API.IntegrationTests
+namespace HotelBookingPlatform.API.IntegrationTests.IntegrationTests
 {
-    public class AuthenticationControllerTests : IClassFixture<CustomWebApplicationFactory<Program>>
+    public class AuthenticationControllerTests(CustomWebApplicationFactory<Program> factory) : IClassFixture<CustomWebApplicationFactory<Program>>
     {
-        private readonly HttpClient _client;
-
-        public AuthenticationControllerTests(CustomWebApplicationFactory<Program> factory)
-        {
-            _client = factory.CreateClient();
-        }
+        private readonly HttpClient _client = factory.CreateClient();
 
         [Fact]
         public async Task Register_ShouldReturnToken_WhenCredentialsAreValid()
@@ -52,7 +47,7 @@ namespace HotelBookingPlatform.API.IntegrationTests
         {
             var loginDto = new
             {
-                Email = "test@test.com",
+                Email = "user@test.com",
                 Password = "Test1234!"
             };
             var content = new StringContent(JsonConvert.SerializeObject(loginDto), Encoding.UTF8, "application/json");
@@ -77,5 +72,4 @@ namespace HotelBookingPlatform.API.IntegrationTests
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
     }
-
 }

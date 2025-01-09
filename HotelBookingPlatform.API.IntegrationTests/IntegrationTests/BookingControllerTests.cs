@@ -7,7 +7,7 @@ using System.Net;
 using Newtonsoft.Json;
 using System.Text;
 
-namespace HotelBookingPlatform.API.IntegrationTests
+namespace HotelBookingPlatform.API.IntegrationTests.IntegrationTests
 {
     public class BookingControllerTests(CustomWebApplicationFactory<Program> factory) : IClassFixture<CustomWebApplicationFactory<Program>>
     {
