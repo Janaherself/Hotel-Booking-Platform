@@ -6,5 +6,7 @@ namespace HotelBookingPlatform.Infrastructure.Interfaces
     {
         Task<IEnumerable<Hotel?>> GetRecentlyVisitedHotelsAsync(int userId);
         Task<IEnumerable<City?>> GetTopVisitedCitiesAsync();
+        void AddBooking(Booking booking);
+        void UpdateBooking(Booking booking);
     }
 }

@@ -36,7 +36,27 @@ namespace HotelBookingPlatform.Infrastructure.Repositories
             .ToListAsync();
 
             return topCities;
+        }
 
+        public void AddBooking(Booking booking)
+        {
+            logger.LogInformation("Waiting for context to attach rooms of booking with id {BookingId}..", booking.BookingId);
+            _context.AttachRange(booking.Rooms!);
+
+            logger.LogInformation("Calling Add method on the base repository..");
+            base.Add(booking);
+        }
+
+        public void UpdateBooking(Booking booking)
+        {
+            if (booking.Rooms != null)
+            {  
+                logger.LogInformation("Waiting for context to attach rooms of booking with id {BookingId}..", booking.BookingId);
+                _context.AttachRange(booking.Rooms);
+            }
+            
+            logger.LogInformation("Calling Update method on the base repository..");
+            base.Update(booking);
         }
     }
 }
