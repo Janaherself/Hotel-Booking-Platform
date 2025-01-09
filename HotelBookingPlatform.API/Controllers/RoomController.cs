@@ -30,7 +30,7 @@ namespace HotelBookingPlatform.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<IActionResult> GetAll([FromQuery] int pageSize, [FromQuery] int pageNumber)
+        public async Task<IActionResult> GetAll([FromQuery] int pageSize = 6, [FromQuery] int pageNumber = 1)
         {
             if (pageNumber <= 0 || pageSize <= 0)
             {
