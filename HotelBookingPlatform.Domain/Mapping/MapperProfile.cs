@@ -8,56 +8,112 @@ namespace HotelBookingPlatform.Domain.Mapping
     {
         public GenericMapperProfile()
         {
-            CreateMap<BookingEntity, Booking>().ReverseMap()
+            CreateMap<BookingEntity, Booking>()
                 .ForAllMembers(options =>
                 {
                     options.AllowNull();
                     options.Condition((src, dest, srcMember) => srcMember != null);
                 });
 
-            CreateMap<CityEntity, City>().ReverseMap()
+            CreateMap<Booking, BookingEntity>()
                 .ForAllMembers(options =>
                 {
                     options.AllowNull();
                     options.Condition((src, dest, srcMember) => srcMember != null);
                 });
 
-            CreateMap<FeaturedDeal, FeaturedDeal>().ReverseMap()
+            CreateMap<CityEntity, City>()
                 .ForAllMembers(options =>
                 {
                     options.AllowNull();
                     options.Condition((src, dest, srcMember) => srcMember != null);
                 });
 
-            CreateMap<HotelEntity, Hotel>().ReverseMap()
+            CreateMap<City, CityEntity>()
                 .ForAllMembers(options =>
                 {
                     options.AllowNull();
                     options.Condition((src, dest, srcMember) => srcMember != null);
                 });
 
-            CreateMap<ReviewEntity, Review>().ReverseMap()
+            CreateMap<FeaturedDealEntity, FeaturedDeal>()
                 .ForAllMembers(options =>
                 {
                     options.AllowNull();
                     options.Condition((src, dest, srcMember) => srcMember != null);
                 });
 
-            CreateMap<RoomEntity, Room>().ReverseMap()
+            CreateMap<FeaturedDeal, FeaturedDealEntity>()
                 .ForAllMembers(options =>
                 {
                     options.AllowNull();
                     options.Condition((src, dest, srcMember) => srcMember != null);
                 });
 
-            CreateMap<UserEntity, User>().ReverseMap()
+            CreateMap<HotelEntity, Hotel>()
                 .ForAllMembers(options =>
                 {
                     options.AllowNull();
                     options.Condition((src, dest, srcMember) => srcMember != null);
                 });
 
-            CreateMap<HotelImageEntity, HotelImage>().ReverseMap()
+            CreateMap<Hotel, HotelEntity>()
+                .ForAllMembers(options =>
+                {
+                    options.AllowNull();
+                    options.Condition((src, dest, srcMember) => srcMember != null);
+                });
+
+            CreateMap<ReviewEntity, Review>()
+                .ForAllMembers(options =>
+                {
+                    options.AllowNull();
+                    options.Condition((src, dest, srcMember) => srcMember != null);
+                });
+
+            CreateMap<Review, ReviewEntity>()
+                .ForAllMembers(options =>
+                {
+                    options.AllowNull();
+                    options.Condition((src, dest, srcMember) => srcMember != null);
+                });
+
+            CreateMap<RoomEntity, Room>()
+                .ForAllMembers(options =>
+                {
+                    options.AllowNull();
+                    options.Condition((src, dest, srcMember) => srcMember != null);
+                });
+
+            CreateMap<Room, RoomEntity>()
+                .ForAllMembers(options =>
+                {
+                     options.AllowNull();
+                     options.Condition((src, dest, srcMember) => srcMember != null);
+                });
+
+            CreateMap<UserEntity, User>()
+                .ForAllMembers(options =>
+                {
+                    options.AllowNull();
+                    options.Condition((src, dest, srcMember) => srcMember != null);
+                });
+
+            CreateMap<User, UserEntity>()
+                .ForAllMembers(options =>
+                {
+                    options.AllowNull();
+                    options.Condition((src, dest, srcMember) => srcMember != null);
+                });
+
+            CreateMap<HotelImageEntity, HotelImage>()
+                .ForAllMembers(options =>
+                {
+                    options.AllowNull();
+                    options.Condition((src, dest, srcMember) => srcMember != null);
+                });
+
+            CreateMap<HotelImage, HotelImageEntity>()
                 .ForAllMembers(options =>
                 {
                     options.AllowNull();
