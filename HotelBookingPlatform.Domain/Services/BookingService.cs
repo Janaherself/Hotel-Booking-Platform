@@ -4,6 +4,7 @@ using HotelBookingPlatform.Domain.Exceptions;
 using HotelBookingPlatform.Domain.Interfaces;
 using HotelBookingPlatform.Infrastructure.Entities;
 using HotelBookingPlatform.Infrastructure.Interfaces;
+using HotelBookingPlatform.Infrastructure.Repositories;
 using Microsoft.Extensions.Logging;
 
 namespace HotelBookingPlatform.Domain.Services
@@ -25,11 +26,18 @@ namespace HotelBookingPlatform.Domain.Services
             return _mapper.Map<IEnumerable<CityEntity>>(cities);
         }
 
+        public override async Task<BookingEntity> GetByIdAsync(int id)
+        {
+            logger.LogInformation("Calling GetByIdAsync method on the booking repository..");
+            var booking = await bookingRepository.GetByIdAsync(id) ?? throw new ItemNotFoundException($"Booking with id {id} was not found.");
+            return _mapper.Map<BookingEntity>(booking);
+        }
+
         public override async Task<IEnumerable<BookingEntity>> GetAllAsync(int pageSize = 6, int pageNumer = 1)
         {
             logger.LogInformation("Calling GetAllAsync method on the booking repository..");
-            var entities = await bookingRepository.GetAllAsync(pageSize, pageNumer);
-            return _mapper.Map<IEnumerable<BookingEntity>>(entities);
+            var bookings = await bookingRepository.GetAllAsync(pageSize, pageNumer);
+            return _mapper.Map<IEnumerable<BookingEntity>>(bookings);
         }
 
         public async Task AddAsync(BookingEntity bookingEntity, int userId)

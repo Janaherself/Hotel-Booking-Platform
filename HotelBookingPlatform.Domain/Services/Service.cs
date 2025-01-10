@@ -43,7 +43,7 @@ namespace HotelBookingPlatform.Domain.Services
             return _mapper.Map<IEnumerable<T>>(entities);
         }
 
-        public async Task<T> GetByIdAsync(int id)
+        public virtual async Task<T> GetByIdAsync(int id)
         {
             logger.LogInformation("Calling GetById method on the {Repository} repository..", typeof(TEntity));
             var entity = await repository.GetByIdAsync(id) ?? throw new ItemNotFoundException($"Item {typeof(TEntity)} with id {id} was not found.");
