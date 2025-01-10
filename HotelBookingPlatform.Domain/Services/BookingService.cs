@@ -25,6 +25,13 @@ namespace HotelBookingPlatform.Domain.Services
             return _mapper.Map<IEnumerable<CityEntity>>(cities);
         }
 
+        public override async Task<IEnumerable<BookingEntity>> GetAllAsync(int pageSize = 6, int pageNumer = 1)
+        {
+            logger.LogInformation("Calling GetAllAsync method on the booking repository..");
+            var entities = await bookingRepository.GetAllAsync(pageSize, pageNumer);
+            return _mapper.Map<IEnumerable<BookingEntity>>(entities);
+        }
+
         public async Task AddAsync(BookingEntity bookingEntity, int userId)
         {
             var rooms = await roomRepository.GetRoomsById(bookingEntity.RoomIds!);

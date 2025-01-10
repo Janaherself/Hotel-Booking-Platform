@@ -36,7 +36,7 @@ namespace HotelBookingPlatform.Domain.Services
             return true;
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync(int pageSize = 6, int pageNumer = 1)
+        public virtual async Task<IEnumerable<T>> GetAllAsync(int pageSize = 6, int pageNumer = 1)
         {
             logger.LogInformation("Calling GetAll method on the {Repository} repository..", typeof(TEntity));
             var entities = await repository.GetAllAsync(pageSize, pageNumer);
