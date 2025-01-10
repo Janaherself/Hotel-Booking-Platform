@@ -38,6 +38,16 @@ namespace HotelBookingPlatform.Infrastructure.Repositories
             return topCities;
         }
 
+        public override async Task<List<Booking>> GetAllAsync(int pageSize = 6, int pageNumber = 1)
+        {
+            logger.LogInformation("Getting {PageSize} items from page {PageNumber} of bookings..", pageSize, pageNumber);
+            return await _dbSet
+                .Include(b => b.Rooms)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+        }
+
         public void AddBooking(Booking booking)
         {
             logger.LogInformation("Waiting for context to attach rooms of booking with id {BookingId}..", booking.BookingId);
