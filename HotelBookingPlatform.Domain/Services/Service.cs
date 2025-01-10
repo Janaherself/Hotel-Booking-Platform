@@ -36,14 +36,14 @@ namespace HotelBookingPlatform.Domain.Services
             return true;
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync(int pageSize = 6, int pageNumer = 1)
+        public virtual async Task<IEnumerable<T>> GetAllAsync(int pageSize = 6, int pageNumer = 1)
         {
             logger.LogInformation("Calling GetAll method on the {Repository} repository..", typeof(TEntity));
             var entities = await repository.GetAllAsync(pageSize, pageNumer);
             return _mapper.Map<IEnumerable<T>>(entities);
         }
 
-        public async Task<T> GetByIdAsync(int id)
+        public virtual async Task<T> GetByIdAsync(int id)
         {
             logger.LogInformation("Calling GetById method on the {Repository} repository..", typeof(TEntity));
             var entity = await repository.GetByIdAsync(id) ?? throw new ItemNotFoundException($"Item {typeof(TEntity)} with id {id} was not found.");

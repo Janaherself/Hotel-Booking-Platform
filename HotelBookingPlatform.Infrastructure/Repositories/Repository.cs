@@ -17,13 +17,13 @@ namespace HotelBookingPlatform.Infrastructure.Repositories
             _logger = logger;
         }
 
-        public async Task<TEntity?> GetByIdAsync(int id)
+        public virtual async Task<TEntity?> GetByIdAsync(int id)
         {
             _logger.LogInformation("Getting {Item} with id {Id}..", typeof(TEntity), id);
             return await _dbSet.FindAsync(id);
         }
 
-        public async Task<List<TEntity>> GetAllAsync(int pageSize = 6, int pageNumber = 1)
+        public virtual async Task<List<TEntity>> GetAllAsync(int pageSize = 6, int pageNumber = 1)
         {
             _logger.LogInformation("Getting {PageSize} items from page {PageNumber}..", pageSize, pageNumber);
             return await _dbSet
