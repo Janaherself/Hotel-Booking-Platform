@@ -111,12 +111,105 @@
   ### Architecture
    <p>The project uses a layered approach for scalability and maintainability. The API layer handles client communication, the Domain layer manages the core logic,
      and the Infrastructure layer ensures smooth database interaction.</p>
-     
+
+  ### Error Handling
+   <p>Innfinity has a custom error handling middleware that is responsible for catching, logging, and peacefully handling any unexpected exception to ensure a seamless user experience when errors happen.</p>
+   
 <br>
                
- ## 📝 Testing
-   <p>The platform includes comprehensive unit tests for all layers. JWT-protected controllers are tested with mocked dependencies to ensure security and functionality.</p>
+## 📝 Testing
+   <p>The platform includes comprehensive unit tests for all layers, as well as integration tests for the database. JWT-protected controllers are tested with mocked dependencies to ensure security and functionality.</p>
     
+<br>
+
+## Example API Usage
+  <p>Below is an example of how to use the API to create a new booking:</p>
+
+  <ol>
+    <li>
+      <strong>Login/Signup</strong>
+      <ul>
+      <li><p>for first-time users, create a new account by:</p></li>
+        <ul>
+          <li>send a <strong>POST</strong> request to <code>api/authentication/register</code></li>
+          <li>inside the request body, insert a valid email address and a at-least 8 chars password as follows:
+            <pre>
+              {
+                "email": "veryreal@emailaddress.com",
+                "password": "morethan8charspassword"
+              }
+            </pre>
+          </li>
+          <li>if the registeration process completes as expected, you will find the generated JWT token in the response, this token is valid for only 30 minutes,
+            and you will need it in later requests, so you better act fast!</li>      
+          
+>  *<p>don't worry if your token expired, you can always get a new one by signing in using the same credentials you provided previously, just follow the following instructions:</p>*
+        </ul>
+      <li><p>for already registered users, you can follow the same steps above, except that your request needs to be sent to <code>api/authentication/login</code>.</p></li>
+      
+>  *<p>very informative following instructions, right?! :)</p>*
+      </ul>
+    </li>
+    <br>
+    <li>
+      <strong>Explore cities, hotels, and rooms</strong>
+        <ul>
+          <li>add <code>Authorization</code> to the request headers, the value of this header shoould be <code>Bearer {Your JWT Token}</code></li>
+          <li>send a <strong>GET</strong> request to:</li>
+            <ul>
+              <li><code>api/cities</code> to view cities</li>
+              <li><code>api/hotels</code> to view hotels</li>
+              <li><code>api/rooms</code> to view rooms</li>
+            </ul>
+          <li>because this API cares about efficient data retrieval it implements pagination, so you can change the values of the following query parameters</li>
+            <ul>
+              <li><code>pageSize</code> to specify how many entities are retrieved in a request</li>
+              <li><code>pageNumber</code> to specify what page you want to view</li>
+            </ul>
+          <li>memorize the IDs of your rooms of choice. now you are ready to book your first room!</li>
+        </ul>
+    </li>
+    <br>
+    <li>
+      <strong>Create your booking</strong>
+      <ul>
+        <li>make sure that the <code>Authorization</code> header has a valid token ust as in the prvious step</li>
+        <li>in the request body, make sure to provide values to all the following properties:</li>
+          <pre>
+            {
+              "checkInDate": "2025-01-10",
+              "checkOutDate": "2025-01-15",
+              "totalPrice": 500.00,
+              "roomIds": [1, 2]
+            }
+          </pre>
+        <li>send a <strong>POST</strong> request to <code>api/bookings</code></li>
+        <li>you should get a response as follows:</li>
+          <ul>
+            <li><p><code>200 OK</code> if your booking has been successfully created</p></li>
+            <li><p><code>401 Unauthorized</code> if your token has expired or is invalid</p></li>
+            <li><p><code>400 BadRequest</code> if your booking has invalid data</p></li>
+          </ul>
+      </ul>
+    </li>
+  </ol>
+  
+  <br>
+
+  <p>Feel free to explore the other endpoints to maximize your booking experience!</p>
+
+  <ul>
+    <li><p><code>api/users</code> for users with admin roles, to view all users</p></li>
+    <li><p><code>api/hotel-images</code> for all users, to view hotels' images</p></li>
+    <li><p><code>api/reviews</code> for all users, to view users' reviews to hotels</p></li>
+    <li><p><code>api/featured-deals</code> for all users, to view hotels' newest deals</p></li>
+  </ul>
+
+<br>
+
+> *<p>Admins have special responsibilities of Adding, Updating, Deleting all of the previously mentioned entities.</p>*
+> *<p>Currently, the API can assign the admin role to two emails, but the list of emails is designed to be extensible.</p>*
+
 <br>
           
 ## 👩‍💻 Contributing
