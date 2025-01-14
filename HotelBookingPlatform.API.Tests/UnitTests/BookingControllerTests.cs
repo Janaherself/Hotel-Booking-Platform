@@ -119,19 +119,21 @@ namespace HotelBookingPlatform.API.Tests.UnitTests
         }
 
         [Fact]
-        public async Task Delete_ShouldReturnNotFound_WhenBookingDoesNotExist()
+        public async Task Delete_ShouldReturnUnauthorized_WhenBookingDoesNotBelongToUser()
         {
-            _mockBookingService.Setup(s => s.DeleteAsync(1)).ReturnsAsync(false);
+            _controller.ControllerContext.HttpContext.User = new ClaimsPrincipal(new ClaimsIdentity([new("UserId", "1")]));
+            _mockBookingService.Setup(s => s.DeleteAsync(1, 1)).ReturnsAsync(false);
 
             var result = await _controller.Delete(1);
 
-            result.Should().BeOfType<NotFoundObjectResult>().Which.StatusCode.Should().Be(StatusCodes.Status404NotFound);
+            result.Should().BeOfType<UnauthorizedObjectResult>().Which.StatusCode.Should().Be(StatusCodes.Status401Unauthorized);
         }
 
         [Fact]
         public async Task Delete_ShouldReturnOk_WhenBookingIsDeletedSuccessfully()
         {
-            _mockBookingService.Setup(s => s.DeleteAsync(1)).ReturnsAsync(true);
+            _controller.ControllerContext.HttpContext.User = new ClaimsPrincipal(new ClaimsIdentity([new("UserId", "1")]));
+            _mockBookingService.Setup(s => s.DeleteAsync(1, 1)).ReturnsAsync(true);
 
             var result = await _controller.Delete(1);
 
@@ -149,14 +151,7 @@ namespace HotelBookingPlatform.API.Tests.UnitTests
             _mockMapper.Setup(m => m.Map<BookingEntity>(bookingUpdateDto)).Returns(bookingEntity);
             _mockBookingService.Setup(s => s.UpdateAsync(bookingId, bookingEntity, userId)).ReturnsAsync(false);
 
-            var claims = new List<Claim> { new("UserId", userId.ToString()) };
-            var identity = new ClaimsIdentity(claims, "TestAuth");
-            var principal = new ClaimsPrincipal(identity);
-
-            _controller.ControllerContext = new ControllerContext
-            {
-                HttpContext = new DefaultHttpContext { User = principal }
-            };
+            _controller.ControllerContext.HttpContext.User = new ClaimsPrincipal(new ClaimsIdentity([new("UserId", "123")]));
 
             var result = await _controller.Update(bookingId, bookingUpdateDto);
 
