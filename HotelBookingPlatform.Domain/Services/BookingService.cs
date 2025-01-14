@@ -60,6 +60,7 @@ namespace HotelBookingPlatform.Domain.Services
 
         public async Task<bool> UpdateAsync(int bookingId, BookingEntity bookingEntity, int userId)
         {
+            logger.LogInformation("Calling GetByIdAsync method on BookingRepository..");
             var booking = await bookingRepository.GetByIdAsync(bookingId) ?? throw new ItemNotFoundException();
 
             if (booking.UserId != userId)
@@ -83,6 +84,21 @@ namespace HotelBookingPlatform.Domain.Services
 
             logger.LogInformation("Calling UpdateBooking method on BookingRepository..");
             bookingRepository.UpdateBooking(booking);
+            return true;
+        }
+
+        public async Task<bool> DeleteAsync(int bookingId, int userId)
+        {
+            logger.LogInformation("Calling GetByIdAsync method on BookingRepository..");
+            var booking = await bookingRepository.GetByIdAsync(bookingId) ?? throw new ItemNotFoundException();
+
+            if (booking.UserId != userId)
+            {
+                return false;
+            }
+
+            logger.LogInformation("Calling Delete method on BookingRepository..");
+            bookingRepository.Delete(booking);
             return true;
         }
     }
