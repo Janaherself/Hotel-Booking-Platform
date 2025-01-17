@@ -18,10 +18,10 @@ jobs:
         dotnet-version: 8.0.x
         
     - name: Restore dependencies
-      run: dotnet restore ./HotelBookingPlatform/HotelBookingPlatform.sln
+      run: dotnet restore ./HotelBookingPlatform.sln
       
     - name: Build
-      run: dotnet build ./HotelBookingPlatform/HotelBookingPlatform.sln --configuration Release --no-restore
+      run: dotnet build ./HotelBookingPlatform.sln --configuration Release --no-restore
       
     - name: Test
       run: dotnet test --no-restore --verbosity normal
