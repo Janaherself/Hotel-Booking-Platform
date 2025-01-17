@@ -24,4 +24,4 @@ jobs:
       run: dotnet build ./HotelBookingPlatform.API/HotelBookingPlatform.API.csproj --configuration release --no-restore
       
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test --verbosity normal
