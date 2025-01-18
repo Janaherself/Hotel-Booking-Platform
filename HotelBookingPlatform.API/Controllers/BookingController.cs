@@ -132,27 +132,33 @@ namespace HotelBookingPlatform.API.Controllers
         /// <summary>
         /// Deletes a booking from the database
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="bookingId"></param>
         /// <returns></returns>
         [Authorize(Policy = "User")]
-        [HttpDelete("{id}")]
+        [HttpDelete("{bookingId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(int bookingId)
         {
-            logger.LogInformation("Calling delete method on the booking service..");
-            var isDeleted = await bookingService.DeleteAsync(id);
-            if (!isDeleted)
+            var userIdClaim = User.FindFirstValue("UserId");
+
+            if (string.IsNullOrEmpty(userIdClaim) || !int.TryParse(userIdClaim, out int userId))
             {
-                logger.LogError("Booking with id {Id} does not exist.", id);
-                return NotFound($"No booking with id {id} exist in the database!");
+                return Unauthorized("Invalid or missing userId claim!");
             }
 
-            await bookingService.SaveAsync();
-            logger.LogInformation("Booking with id {Id} was deleted succefully.", id);
+            logger.LogInformation("Calling delete method on the booking service..");
+            var isDeleted = await bookingService.DeleteAsync(bookingId, userId);
+            if (!isDeleted)
+            {
+                return Unauthorized($"You are unauthorized to delete booking with id {bookingId}!");
+            }
 
-            return Ok($"Booking with id {id} has been deleted successfully!");
+            logger.LogInformation("Calling SaveAsync method on the booking service..");
+            await bookingService.SaveAsync();
+
+            return Ok($"Booking with id {bookingId} has been deleted successfully!");
         }
     }
 }

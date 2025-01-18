@@ -5,6 +5,7 @@ using HotelBookingPlatform.Domain.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace HotelBookingPlatform.API.Controllers
 {
@@ -22,15 +23,22 @@ namespace HotelBookingPlatform.API.Controllers
         /// <summary>
         /// Gets the latest 5 hotels that the user visited
         /// </summary>
-        /// <param name="userId"></param>
+        /// <param></param>
         /// <returns></returns>
-        [Authorize(Policy = "AdminOrUser")]
-        [HttpGet("recent-visited-hotels/{userId}")]
+        [Authorize(Policy = "User")]
+        [HttpGet("recent-visited-hotels")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<IActionResult> GetRecentlyVisitedHotelsAsync(int userId)
+        public async Task<IActionResult> GetRecentlyVisitedHotelsAsync()
         {
+            var userIdClaim = User.FindFirstValue("UserId");
+
+            if (string.IsNullOrEmpty(userIdClaim) || !int.TryParse(userIdClaim, out int userId))
+            {
+                return Unauthorized("Invalid or missing userId claim!");
+            }
+
             logger.LogInformation("Calling the method on the booking service..");
             var hotelEntities = await bookingService.GetRecentlyVisitedHotelsAsync(userId);
 
