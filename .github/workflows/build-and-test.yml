@@ -39,16 +39,13 @@ jobs:
     - name: Set up environment variables
       run: echo "ConnectionStrings__DefaultConnection=${{ secrets.DEFAULT_CONNECTION }}" >> $GITHUB_ENV
 
-    - name: Test SQL Server Connection
+    - name: Wait for SQL Server
       run: |
-        /opt/mssql-tools/bin/sqlcmd -S localhost,1433 -U sa -P "YourStrong!Password" -Q "SELECT 1"
-        
-    - name: Wait for SQL Server to be ready
-      run: sleep 20
-
-    - name: Test SQL Server Connection
-      run: |
-        /opt/mssql-tools/bin/sqlcmd -S localhost,1433 -U sa -P "YourStrong!Password" -Q "SELECT 1"
+        for i in {1..30}; do
+          docker exec sql-server /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P ${{ secrets.SA_PASSWORD }} -Q "SELECT 1" && break
+          echo "Waiting for SQL Server to be ready..."
+          sleep 5
+        done
 
     - name: Run migrations
       working-directory: ./HotelBookingPlatform.API
