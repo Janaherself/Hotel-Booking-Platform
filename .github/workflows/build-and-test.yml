@@ -40,10 +40,10 @@ jobs:
       run: sleep 30
 
     - name: Fetch SQL Server Logs
-      run: docker logs sqlserver
+      run: docker logs sql-server
 
     - name: Run migrations
-      run: dotnet ef database update --verbose --project ./HotelBookingPlatform.Infrastructure/HotelBookingPlatform.Infrastructure.csproj --startup-project ./HotelBookingPlatform.API/HotelBookingPlatform.API.csproj
+      run: dotnet ef database update --verbose --context AppDbContext --startup-project ./HotelBookingPlatform.API/HotelBookingPlatform.API.csproj
       env:
         DefaultConnection: ${{ secrets.DEFAULT_CONNECTION }}
 
