@@ -36,6 +36,9 @@ jobs:
     - name: Build
       run: dotnet build --no-restore --configuration Release
 
+    - name: Wait for SQL Server to be ready
+      run: sleep 30
+
     - name: Run migrations
       run: dotnet ef database update --context AppDbContext
 
