@@ -40,7 +40,7 @@ jobs:
       run: echo "ConnectionStrings__DefaultConnection=${{ secrets.DEFAULT_CONNECTION }}" >> $GITHUB_ENV
 
     - name: Run migrations
-      run: dotnet ef database update --context AppDbContext
+      run: dotnet ef database update --context AppDbContext --project ./HotelBookingPlatform.Infrastructure/HotelBookingPlatform.Infrastructure.csproj
       
     - name: Test
       run: dotnet test --no-build --verbosity normal
