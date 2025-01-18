@@ -41,7 +41,7 @@ jobs:
 
     - name: Run migrations
       working-directory: ./HotelBookingPlatform.Infrastructure
-      run: dotnet ef database update --connection ${{ secrets.DEFAULT_CONNECTION }}
+      run: dotnet ef database update --startup-project ./HotelBookingPlatform.API
       
     - name: Test
       run: dotnet test --no-build --verbosity normal
