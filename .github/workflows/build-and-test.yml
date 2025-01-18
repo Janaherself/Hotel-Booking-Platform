@@ -29,15 +29,14 @@ jobs:
         
     - name: Restore dependencies
       run: dotnet restore 
-
-    - name: Install dotnet-ef tool
-      run: dotnet tool install --global dotnet-ef
-      
+ 
     - name: Build
       run: dotnet build --no-restore --configuration Release
 
     - name: Run migrations
       run: dotnet ef database update --project ./HotelBookingPlatform.Infrastructure/HotelBookingPlatform.Infrastructure.csproj
+      env:
+        DefaultConnection: ${{ secrets.DEFAULT_CONNECTION }}
 
     - name: Test
       run: dotnet test --no-build --verbosity normal
