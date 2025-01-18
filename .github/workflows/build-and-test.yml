@@ -2,13 +2,23 @@ name: Build and Test
 
 on:
   push:
+    branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
 
 jobs:
   build:
 
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
+
+    services:
+      sqlserver:
+        image: mcr.microsoft.com/mssql/server:2022-latest
+        env:
+          SA_PASSWORD: ${{ secrets.SA_PASSWORD }}
+          ACCEPT_EULA: "Y"
+        ports:
+          - 1433:1433
 
     steps:
     - uses: actions/checkout@v4
@@ -21,7 +31,13 @@ jobs:
       run: dotnet restore 
       
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build --no-restore --configuration Release
+
+    - name: Set up environment variables
+      run: echo "ConnectionStrings__DefaultConnection=${{ secrets.DEFAULT_CONNECTION }}" >> $GITHUB_ENV
+
+    - name: Run migrations
+      run: dotnet ef database update --context AppDbContext
       
     - name: Test
       run: dotnet test --no-build --verbosity normal
