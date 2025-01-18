@@ -36,11 +36,11 @@ jobs:
     - name: Build
       run: dotnet build --no-restore --configuration Release
 
+    - name: List Running Containers
+      run: docker ps
+
     - name: Wait for SQL Server to be ready
       run: sleep 30
-
-    - name: Fetch SQL Server Logs
-      run: docker logs sql-server
 
     - name: Run migrations
       run: dotnet ef database update --verbose --context AppDbContext --startup-project ./HotelBookingPlatform.API/HotelBookingPlatform.API.csproj
