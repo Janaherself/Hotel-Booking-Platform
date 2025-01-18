@@ -28,7 +28,7 @@ jobs:
         dotnet-version: 8.0.x
 
     - name: Fetch SQL Server Logs
-      run: docker logs sql-server
+      run: docker logs sqlserver
 
     - name: Restore dependencies
       run: dotnet restore 
