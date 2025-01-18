@@ -27,9 +27,6 @@ jobs:
       with:
         dotnet-version: 8.0.x
 
-    - name: Fetch SQL Server Logs
-      run: docker logs sqlserver
-
     - name: Restore dependencies
       run: dotnet restore 
 
@@ -41,6 +38,9 @@ jobs:
 
     - name: Wait for SQL Server to be ready
       run: sleep 30
+
+    - name: Fetch SQL Server Logs
+      run: docker logs sqlserver
 
     - name: Run migrations
       run: dotnet ef database update --verbose --project ./HotelBookingPlatform.Infrastructure/HotelBookingPlatform.Infrastructure.csproj --startup-project ./HotelBookingPlatform.API/HotelBookingPlatform.API.csproj
