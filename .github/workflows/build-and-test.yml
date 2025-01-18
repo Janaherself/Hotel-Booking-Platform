@@ -41,7 +41,7 @@ jobs:
 
     - name: Run migrations
       working-directory: ./HotelBookingPlatform.API
-      run: dotnet ef database update --project ./HotelBookingPlatform.Infrastructure.HotelBookingPlatform.Infrastructure.csproj
+      run: dotnet ef database update --project ./HotelBookingPlatform.Infrastructure/HotelBookingPlatform.Infrastructure.csproj
       
     - name: Test
       run: dotnet test --no-build --verbosity normal
