@@ -37,7 +37,7 @@ jobs:
       run: dotnet build --no-restore --configuration Release
 
     - name: Run migrations
-      run: dotnet ef database update --project ./HotelBookingPlatform.Infrastructure/HotelBookingPlatform.Infrastructure.csproj
+      run: dotnet ef database update --project ./HotelBookingPlatform.Infrastructure/HotelBookingPlatform.Infrastructure.csproj --startup-project ./HotelBookingPlatform.API/HotelBookingPlatform.API.csproj
       env:
         DefaultConnection: ${{ secrets.DEFAULT_CONNECTION }}
 
