@@ -42,4 +42,4 @@ jobs:
         DefaultConnection: ${{ secrets.DEFAULT_CONNECTION }}
 
     - name: Test
-      run: dotnet test --no-restore --verbosity normal
+      run: dotnet test --verbosity detailed
