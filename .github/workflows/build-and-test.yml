@@ -41,11 +41,23 @@ jobs:
       env:
         DefaultConnection: ${{ secrets.DEFAULT_CONNECTION }}
 
-    - name: Test API
+    - name: Unit Test API
       run: dotnet test HotelBookingPlatform.API.Tests --no-restore --verbosity normal
 
-    - name: Test Domain
+    - name: Unit Test Domain
       run: dotnet test HotelBookingPlatform.Domain.Tests --no-restore --verbosity normal
 
-    - name: Test Infrastructure
+    - name: Unit Test Infrastructure
       run: dotnet test HotelBookingPlatform.Infrastructure.Tests --no-restore --verbosity normal
+
+    - name: Integration Test Infrastructure
+      run: dotnet test HotelBookingPlatform.Infrastructure.IntegrationTests --no-restore --verbosity normal
+      continue-on-error: true
+      env:
+        DefaultConnection: ${{ secrets.DEFAULT_CONNECTION }}
+
+    - name: Integration Test API
+      run: dotnet test HotelBookingPlatform.API.IntegrationTests --no-restore --verbosity normal
+      continue-on-error: true
+      env:
+        DefaultConnection: ${{ secrets.DEFAULT_CONNECTION }}
