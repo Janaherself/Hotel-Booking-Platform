@@ -9,11 +9,7 @@ on:
 jobs:
   build-and-test:
 
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest]
-
+    runs-on: ubuntu-latest
     services:
       sqlserver:
         image: mcr.microsoft.com/mssql/server:2022-latest
