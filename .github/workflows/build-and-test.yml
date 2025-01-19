@@ -41,17 +41,17 @@ jobs:
       env:
         DefaultConnection: ${{ secrets.DEFAULT_CONNECTION }}
 
-    - name: Test
+    - name: Test API
       run: dotnet test HotelBookingPlatform.API.Tests --no-restore --verbosity normal
 
-    - name: Test
+    - name: Test Domain
       run: dotnet test HotelBookingPlatform.Domain.Tests --no-restore --verbosity normal
 
-    - name: Test
+    - name: Test Infrastructure
       run: dotnet test HotelBookingPlatform.Infrastructure.Tests --no-restore --verbosity normal
 
-    - name: Test
-      run: dotnet test HotelBookingPlatform.API.IntegrationTests --no-restore --verbosity normal
+    - name: Test Infrastructure Integration
+      run: dotnet test HotelBookingPlatform.Infrastructure.IntegrationTests --no-restore --verbosity normal
 
     - name: Test
       run: dotnet test --verbosity detailed
