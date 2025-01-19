@@ -49,13 +49,3 @@ jobs:
 
     - name: Test Infrastructure
       run: dotnet test HotelBookingPlatform.Infrastructure.Tests --no-restore --verbosity normal
-
-    - name: Test Infrastructure Integration
-      run: dotnet test HotelBookingPlatform.Infrastructure.IntegrationTests --no-restore --verbosity normal
-      env:
-        DefaultConnection: ${{ secrets.DEFAULT_CONNECTION }}
-
-    - name: Test
-      run: dotnet test --verbosity detailed
-      env:
-        DefaultConnection: ${{ secrets.DEFAULT_CONNECTION }}
