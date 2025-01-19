@@ -36,12 +36,6 @@ jobs:
     - name: Build
       run: dotnet build --no-restore --configuration Release
 
-    - name: List Running Containers
-      run: docker ps
-
-    - name: Wait for SQL Server to be ready
-      run: sleep 30
-
     - name: Run migrations
       run: dotnet ef database update --verbose --context AppDbContext --connection "${{ secrets.DEFAULT_CONNECTION }}" /
         --startup-project ./HotelBookingPlatform.API/HotelBookingPlatform.API.csproj
