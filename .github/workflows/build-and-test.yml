@@ -36,9 +36,7 @@ jobs:
       run: dotnet build --no-restore --configuration Release
 
     - name: Run migrations
-      run: dotnet ef database update --context AppDbContext --startup-project ./HotelBookingPlatform.API/HotelBookingPlatform.API.csproj
-      env:
-        DefaultConnection: ${{ secrets.DEFAULT_CONNECTION }}
+      run: dotnet ef database update --context AppDbContext --connection "${{ secrets.DEFAULT_CONNECTION }}" --startup-project ./HotelBookingPlatform.API/HotelBookingPlatform.API.csproj
 
     - name: Test
       run: dotnet test --no-restore --verbosity minimal
