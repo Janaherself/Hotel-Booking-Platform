@@ -1,6 +1,10 @@
 name: Create and Push Docker Image to Docker Hub
 
 on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
   workflow_run:
     workflows: ["Build and Test"]
     types:
@@ -20,7 +24,7 @@ jobs:
       env:
         DOCKERHUB_USERNAME: ${{secrets.DOCKERHUB_USERNAME}}
         DOCKERHUB_PASSWORD: ${{secrets.DOCKERHUB_PASSWORD}}
-      run: docker login -u $DOCKERHUB_PASSWORD -p $DOCKERHUB_USERNAME
+      run: docker login -u $DOCKERHUB_USERNAME --password-stdin $DOCKERHUB_PASSWORD
     
     - name: Build the Docker image
       run: docker build -t Hotel-Booking-System .
