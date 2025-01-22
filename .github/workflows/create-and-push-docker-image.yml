@@ -25,5 +25,5 @@ jobs:
       run: docker build -f ./HotelBookingPlatform.API/Dockerfile -t hotel-booking-system .
 
     - name: Push to Docker Hub
-      run: docker push janaherself/hotel-booking-system:latest
+      run: docker push janaherself/hotel-booking-system
     
