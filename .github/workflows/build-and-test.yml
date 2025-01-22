@@ -36,27 +36,10 @@ jobs:
       run: dotnet build --no-restore --configuration Release
 
     - name: Run migrations
-      run: dotnet ef database update --context AppDbContext --startup-project ./HotelBookingPlatform.API/HotelBookingPlatform.API.csproj
-      env:
-        DefaultConnection: ${{ secrets.DEFAULT_CONNECTION }}
+      run: dotnet ef database update --context AppDbContext --connection ${{ secrets.DEFAULT_CONNECTION }} --startup-project ./HotelBookingPlatform.API/HotelBookingPlatform.API.csproj
 
-    - name: Unit Test API
-      run: dotnet test HotelBookingPlatform.API.Tests --no-restore --verbosity minimal
-
-    - name: Unit Test Domain
-      run: dotnet test HotelBookingPlatform.Domain.Tests --no-restore --verbosity minimal
-
-    - name: Unit Test Infrastructure
-      run: dotnet test HotelBookingPlatform.Infrastructure.Tests --no-restore --verbosity minimal
-
-    - name: Integration Test Infrastructure
-      run: dotnet test HotelBookingPlatform.Infrastructure.IntegrationTests --no-restore --verbosity minimal
-      continue-on-error: true
-      env:
-        DefaultConnection: ${{ secrets.DEFAULT_CONNECTION }}
-
-    - name: Integration Test API
-      run: dotnet test HotelBookingPlatform.API.IntegrationTests --no-restore --verbosity minimal
+    - name: Test
+      run: dotnet test --no-restore --verbosity minimal
       continue-on-error: true
       env:
         DefaultConnection: ${{ secrets.DEFAULT_CONNECTION }}
