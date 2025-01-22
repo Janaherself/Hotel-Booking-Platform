@@ -28,5 +28,5 @@ jobs:
       run: docker images
 
     - name: Push to Docker Hub
-      run: docker push janaherself/hotel-booking-system:latest
+      run: docker push hotel-booking-system:latest
     
