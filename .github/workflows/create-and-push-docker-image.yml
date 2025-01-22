@@ -1,0 +1,30 @@
+name: Create and Push Docker Image to Docker Hub
+
+on:
+  workflow_run:
+    workflows: ["Build and Test"]
+    types:
+      - completed
+
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Login to Docker Hub
+      env:
+        DOCKERHUB_USERNAME: ${{secrests.DOCKERHUB_USERNAME}}
+        DOCKERHUB_PASSWORD: ${{secrests.DOCKERHUB_PASSWORD}}
+      run: docker login -u $DOCKERHUB_PASSWORD -p $DOCKERHUB_USERNAME
+    
+    - name: Build the Docker image
+      run: docker build -t Hotel-Booking-System .
+
+    - name: Push to Docker Hub
+      run: docker push $DOCKERHUB_USERNAME/Hotel-Booking-System:latest
+    
