@@ -56,6 +56,8 @@
     <li><strong>Moq</strong> for mocking dependencies in unit tests</li>
     <li><strong>FluentAssertions</strong> for friendly test assertions</li>
     <li><strong>Jira</strong> for project management and task tracking</li>
+    <li><strong>Github Actions</strong> for CI/CD pipelines</li>
+    <li><strong>Docker</strong> for containarization</li>
   </ul>
   
 <br>
@@ -95,6 +97,12 @@
   ### 📝 Testing
    <p>Innfinity includes comprehensive unit tests for all layers, as well as integration tests for the database. 
      JWT-protected controllers are tested with mocked dependencies to ensure security and functionality.</p>
+
+  ### 👨🏻‍🔧 CI/CD Pipelines
+   <p>When it comes to Continuous Integration/Continuous Delivery/Deployment pipelines, Github Actions helped write and run pipelines to build, test, and deploy all new features to Innfinity with the least effort and the maximum benefits.</p>
+
+  ### 🫙 Containarization
+   <p>Innfinity's API, with the help of CI/CD pipelines, is pushed to Docker Hub after every successful building and testing of the solution, to simplify developing code and sharing APIs with everyone!</p>
     
 <br>
 
