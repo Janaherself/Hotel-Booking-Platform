@@ -101,7 +101,7 @@
   ### 👨🏻‍🔧 CI/CD Pipelines
    <p>When it comes to Continuous Integration/Continuous Delivery/Deployment pipelines, Github Actions helped write and run pipelines to build, test, and deploy all new features to Innfinity with the least effort and the maximum benefits.</p>
 
-  ### 🫙 Containarization
+  ### 📦 Containarization
    <p>Innfinity's API, with the help of CI/CD pipelines, is pushed to Docker Hub after every successful building and testing of the solution, to simplify developing code and sharing APIs with everyone!</p>
     
 <br>
