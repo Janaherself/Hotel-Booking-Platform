@@ -25,6 +25,12 @@ namespace HotelBookingPlatform.API
             builder.Host.UseSerilog((context, configuration) =>
                 configuration.ReadFrom.Configuration(context.Configuration));
 
+            builder.WebHost.ConfigureKestrel(options =>
+            {
+                options.ListenAnyIP(8080);
+                options.ListenAnyIP(8081);
+            });
+
             builder.Services.AddDbContext<AppDbContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("defaultDB"))
