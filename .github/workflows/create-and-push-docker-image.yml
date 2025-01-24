@@ -24,9 +24,6 @@ jobs:
     - name: Build the Docker image
       run: docker build -f ./HotelBookingPlatform.API/Dockerfile -t janaherself/hotel-booking-system:latest .
 
-    - name: List Docker images
-      run: docker images
-
     - name: Push to Docker Hub
       run: docker push janaherself/hotel-booking-system:latest
     

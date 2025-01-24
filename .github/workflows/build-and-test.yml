@@ -39,7 +39,10 @@ jobs:
       run: dotnet ef database update --context AppDbContext --connection "${{ secrets.DEFAULT_CONNECTION }}" --startup-project ./HotelBookingPlatform.API/HotelBookingPlatform.API.csproj
 
     - name: Test
-      run: dotnet test --no-restore --verbosity minimal
-      continue-on-error: true
-      env:
-        DefaultConnection: ${{ secrets.DEFAULT_CONNECTION }}
+      run: dotnet test ./HotelBookingPlatform.API.Tests --no-restore --verbosity minimal
+
+    - name: Test
+      run: dotnet test ./HotelBookingPlatform.Domain.Tests --no-restore --verbosity minimal
+
+    - name: Test
+      run: dotnet test ./HotelBookingPlatform.Infrastructure.Tests --no-restore --verbosity minimal
