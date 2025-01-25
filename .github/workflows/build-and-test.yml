@@ -19,6 +19,12 @@ jobs:
         ports:
           - 1433:1433
 
+    env:
+      ConnectionStrings__defaultDB: ${{ secrets.DEFAULT_CONNECTION }}
+      InnfinitySecretKey: ${{ secrets.SECRET_KEY }}
+      InnfinityIssuer: ${{ secrets.ISSUER }}
+      InnfinityAudience: ${{ secrets.AUDIENCE }}
+
     steps:
     - uses: actions/checkout@v4
     - name: Setup .NET
@@ -39,10 +45,7 @@ jobs:
       run: dotnet ef database update --context AppDbContext --connection "${{ secrets.DEFAULT_CONNECTION }}" --startup-project ./HotelBookingPlatform.API/HotelBookingPlatform.API.csproj
 
     - name: Test
-      run: dotnet test ./HotelBookingPlatform.API.Tests --no-restore --verbosity minimal
+      run: dotnet test ./HotelBookingPlatform.API.IntegrationTests --no-restore --verbosity minimal
 
     - name: Test
-      run: dotnet test ./HotelBookingPlatform.Domain.Tests --no-restore --verbosity minimal
-
-    - name: Test
-      run: dotnet test ./HotelBookingPlatform.Infrastructure.Tests --no-restore --verbosity minimal
+      run: dotnet test ./HotelBookingPlatform.Infrastructure.IntegrationTests --no-restore --verbosity minimal
