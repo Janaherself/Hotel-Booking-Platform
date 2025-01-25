@@ -40,6 +40,19 @@ jobs:
       
     - name: Build
       run: dotnet build --no-restore --configuration Release
+    
+    - name: Wait for SQL Server to be ready
+      run: |
+        for i in {1..30}; do
+          if nc -z sqlserver 1433; then
+            echo "SQL Server is ready"
+            exit 0
+          fi
+          echo "Waiting for SQL Server to be ready..."
+          sleep 2
+        done
+        echo "SQL Server did not start in time"
+        exit 1
 
     - name: Run migrations
       run: dotnet ef database update --context AppDbContext --connection "${{ secrets.DEFAULT_CONNECTION }}" --startup-project ./HotelBookingPlatform.API/HotelBookingPlatform.API.csproj
