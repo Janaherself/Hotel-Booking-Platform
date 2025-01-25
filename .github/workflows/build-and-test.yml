@@ -47,5 +47,13 @@ jobs:
     - name: Test
       run: dotnet test ./HotelBookingPlatform.API.IntegrationTests --no-restore --verbosity minimal
 
+    - name: Print environment variables
+      run: printenv
+    - name: Debug connection string
+      run: echo ${{ secrets.DB_CONNECTION_STRING }}
+
     - name: Test
       run: dotnet test ./HotelBookingPlatform.Infrastructure.IntegrationTests --no-restore --verbosity minimal
+      env:
+        ConnectionStrings__DefaultConnection: ${{ secrets.DEFAULT_CONNECTION }}
+
