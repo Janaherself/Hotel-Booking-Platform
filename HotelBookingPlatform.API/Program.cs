@@ -54,7 +54,7 @@ namespace HotelBookingPlatform.API
             builder.Services.AddScoped<IPasswordService, PasswordService>();
             builder.Services.AddScoped<IRoleService, RoleService>();
 
-            builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            builder.Services.AddAutoMapper(typeof(Program));
 
             builder.Services.AddFluentValidationAutoValidation();
             builder.Services.AddValidatorsFromAssemblyContaining<LoginDtoValidator>();
@@ -129,7 +129,11 @@ namespace HotelBookingPlatform.API
             using (var scope = app.Services.CreateScope())
             {
                 var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-                dbContext.Database.Migrate();
+
+                if (dbContext.Database.IsRelational())
+                {
+                    dbContext.Database.Migrate();
+                }
             }
 
             if (app.Environment.IsDevelopment())
