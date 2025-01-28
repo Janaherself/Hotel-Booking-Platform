@@ -25,6 +25,12 @@ namespace HotelBookingPlatform.API
             builder.Host.UseSerilog((context, configuration) =>
                 configuration.ReadFrom.Configuration(context.Configuration));
 
+            builder.WebHost.ConfigureKestrel(options =>
+            {
+                options.ListenAnyIP(8080);
+                options.ListenAnyIP(8081);
+            });
+
             builder.Services.AddDbContext<AppDbContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("defaultDB"))
@@ -48,7 +54,7 @@ namespace HotelBookingPlatform.API
             builder.Services.AddScoped<IPasswordService, PasswordService>();
             builder.Services.AddScoped<IRoleService, RoleService>();
 
-            builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            builder.Services.AddAutoMapper(typeof(Program));
 
             builder.Services.AddFluentValidationAutoValidation();
             builder.Services.AddValidatorsFromAssemblyContaining<LoginDtoValidator>();
@@ -99,17 +105,17 @@ namespace HotelBookingPlatform.API
 
                     options.AddSecurityRequirement(new OpenApiSecurityRequirement
                     {
-            {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
-                {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "Bearer"
-                }
-            },
-            Array.Empty<string>()
-            }
+                        {
+                            new OpenApiSecurityScheme
+                            {
+                                Reference = new OpenApiReference
+                                {
+                                    Type = ReferenceType.SecurityScheme,
+                                    Id = "Bearer"
+                                }
+                            },
+                            Array.Empty<string>()
+                        }
                     });
                 }
             );
@@ -119,6 +125,16 @@ namespace HotelBookingPlatform.API
             app.UseSerilogRequestLogging();
 
             app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
+                if (dbContext.Database.IsRelational())
+                {
+                    dbContext.Database.Migrate();
+                }
+            }
 
             if (app.Environment.IsDevelopment())
             {
