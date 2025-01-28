@@ -7,9 +7,10 @@ on:
     branches: [ "master" ]
 
 jobs:
-  build-and-test-app:
 
+  build-and-test-app:
     runs-on: ubuntu-latest
+    
     services:
       sqlserver:
         image: mcr.microsoft.com/mssql/server:2022-latest
@@ -50,7 +51,7 @@ jobs:
 
   
   build-and-push-image:
-
+    needs: build-and-test-app
     runs-on: ubuntu-latest
 
     steps:
