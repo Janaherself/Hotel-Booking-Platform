@@ -114,6 +114,7 @@
      <li>.NET 8 SDK</li>
      <li>SQL Server</li>
      <li>Visual Studio, Rider, or whatever your geeky mind finds peace using</li>
+     <li>Docker, if you prefer the second way</li>
      <li>A sense of adventure (and probably some coffee).</li>
    </ul>
   
@@ -127,7 +128,16 @@
      <li>Run the migrations to set up the database: <code>dotnet ef database update</code>.</li>
      <li>Build and run the solution. Happy booking!</li>
    </ol>
-   
+
+#### Alternatively, you can..
+  <ol>
+     <li>Clone the repository: <code>git clone https://github.com/Janaherself/Hotel-Booking-Platform.git</code></li>
+     <li>Navigate to the solution directory and open it in your IDE.</li>
+     <li>Create a <code>.env</code> file in the root directory and set up these environment variables in it"<code>InnfinitySecretKey</code> and <code>SA_PASSWORD</code>"
+       <i>-make sure they are long and strong enough because hackers are always waiting for you to make such a mistake</i> :)</li>
+     <li>Open a terminal in the root directory and write this command <code>docker-compose up --build</code>, in a couple of seconds, you should be able to see the running containers in Docker Desktop.</li>
+     <li>Scroll down and navigate to Postman to start your journey, Happy booking once again!</li>
+  </ol>
 <br>
  
 ## 💡 Example Usage
