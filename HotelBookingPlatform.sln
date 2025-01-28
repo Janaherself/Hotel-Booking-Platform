@@ -17,7 +17,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelBookingPlatform.Domain
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelBookingPlatform.API.IntegrationTests", "HotelBookingPlatform.API.IntegrationTests\HotelBookingPlatform.API.IntegrationTests.csproj", "{9CC81960-358D-49A6-A436-E426951FDF83}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelBookingPlatform.Infrastructure.IntegrationTests", "HotelBookingPlatform.Infrastructure.IntegrationTests\HotelBookingPlatform.Infrastructure.IntegrationTests.csproj", "{53045F4B-EC82-42C2-AEC5-22DC1B26DEA9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelBookingPlatform.Infrastructure.IntegrationTests", "HotelBookingPlatform.Infrastructure.IntegrationTests\HotelBookingPlatform.Infrastructure.IntegrationTests.csproj", "{53045F4B-EC82-42C2-AEC5-22DC1B26DEA9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{553C6CFC-0E32-42A7-9CEC-726536B2F626}"
+	ProjectSection(SolutionItems) = preProject
+		.env = .env
+		docker-compose.yml = docker-compose.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

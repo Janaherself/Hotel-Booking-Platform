@@ -105,17 +105,17 @@ namespace HotelBookingPlatform.API
 
                     options.AddSecurityRequirement(new OpenApiSecurityRequirement
                     {
-            {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
-                {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "Bearer"
-                }
-            },
-            Array.Empty<string>()
-            }
+                        {
+                            new OpenApiSecurityScheme
+                            {
+                                Reference = new OpenApiReference
+                                {
+                                    Type = ReferenceType.SecurityScheme,
+                                    Id = "Bearer"
+                                }
+                            },
+                            Array.Empty<string>()
+                        }
                     });
                 }
             );
@@ -125,6 +125,12 @@ namespace HotelBookingPlatform.API
             app.UseSerilogRequestLogging();
 
             app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+                dbContext.Database.Migrate();
+            }
 
             if (app.Environment.IsDevelopment())
             {
